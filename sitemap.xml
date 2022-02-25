@@ -74,13 +74,6 @@
 
   
   <url>
-    <loc>https://quensa.github.io/tags/SpringMvc/</loc>
-    <lastmod>2022-02-25</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://quensa.github.io/tags/Mybatis/</loc>
     <lastmod>2022-02-25</lastmod>
     <changefreq>weekly</changefreq>
@@ -89,6 +82,13 @@
   
   <url>
     <loc>https://quensa.github.io/tags/Spring/</loc>
+    <lastmod>2022-02-25</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://quensa.github.io/tags/SpringMvc/</loc>
     <lastmod>2022-02-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
