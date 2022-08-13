@@ -4,6 +4,81 @@
   
     
     <entry>
+      <title>RBAC模型</title>
+      <link href="/2022/08/13/RBAC%E6%A8%A1%E5%9E%8B/"/>
+      <url>/2022/08/13/RBAC%E6%A8%A1%E5%9E%8B/</url>
+      
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h1 id="RBAC模型"><a href="#RBAC模型" class="headerlink" title="RBAC模型"></a>RBAC模型</h1><h2 id="RBAC介绍"><a href="#RBAC介绍" class="headerlink" title="RBAC介绍"></a>RBAC介绍</h2><p>RBAC（Role-Based Access Control）权限模型即：基于角色的权限控制。通过角色关联用户，角色关联权限的方式间接赋予用户权限。</p><p>在我们的生活中，不同的用户肯定会赋予不同的权限，而这个RBAC模型就是基于角色的访问控制的一种权限模型。</p><p><img src="https://image.woshipm.com/wp-files/2016/11/vIReQ3fevo3UUetTeKjP.png" alt="1"></p><p>而权限一般的想法是只要给用户分配权限就行了，何必多此一举，中间加一个角色给权限找个中间商？——其实之所以在中间加一层角色，是为了增加安全性和效率，而且后续扩展上也会提升不少。</p><p>比方：多个用户拥有相同的权限，在分配的时候就要分别为这几个用户指定相同的权限，修改时也要为这几个用户的权限进行一一修改。有了角色后，只需要为该角色制定好权限后，将相同权限的用户都指定为同一个角色即可，便于权限管理。对于批量的用户权限调整，只需调整用户关联的角色权限，无需对每一个用户都进行权限调整，既大幅提升权限调整的效率，又降低了漏调权限的概率。就是通过控制角色的权限从而实现对用户的权限控制，在一定程度上能降低成本和消耗。</p><h2 id="最基本模型——RBAC0"><a href="#最基本模型——RBAC0" class="headerlink" title="最基本模型——RBAC0"></a>最基本模型——RBAC0</h2><p>RBAC0模型，也是基础、最简单的，相当于底层逻辑。在这个模型中，我们把权限赋予角色，再把角色赋予用户。</p><p>这个模型中又包含了2种：</p><p>1.用户和角色是多对一关系，即：一个用户只充当一种角色，一种角色可以有多个用户担当。</p><p>2.用户和角色是多对多关系，即：一个用户可同时充当多种角色（用户拥有的权限等于他所有的角色持有权限之和），一种角色可以有多个用户担当。（我们的系统就是使用的多对多）</p><p><img src="https://image.woshipm.com/wp-files/2016/11/aF62T8Yu9fZ7APgdK2Zf.png" alt="2"></p><h2 id="RBAC权限模型的类型"><a href="#RBAC权限模型的类型" class="headerlink" title="RBAC权限模型的类型"></a>RBAC权限模型的类型</h2><h3 id="角色分层模型RBAC1"><a href="#角色分层模型RBAC1" class="headerlink" title="角色分层模型RBAC1"></a>角色分层模型RBAC1</h3><p>相对于RBAC0模型，对角色这层元素上进行了细分<strong>引入了继承概念</strong>——可以继承某个基础角色生成子角色。简单理解就是，给角色可以分成几个等级，每个等级权限不同，从而实现更细粒度的权限管理。</p><p><img src="https://photobed-1309814171.cos.ap-guangzhou.myqcloud.com/img/202207162256155.png" alt="image-20220716225642091"></p><h3 id="角色限制模型RBAC2"><a href="#角色限制模型RBAC2" class="headerlink" title="角色限制模型RBAC2"></a>角色限制模型RBAC2</h3><p>RBAC2同样建立在RBAC0基础之上，仅是对用户、角色和权限三者之间增加了一些限制。这些限制可以分成两类，即<strong>静态职责分离SSD</strong>(Static Separation of Duty)和<strong>动态职责分离DSD</strong>(Dynamic Separation of Duty)</p><ul><li>静态职责分离 SSD<ul><li>角色互斥：相同用户不能同时拥有互斥关系的角色，例如会计和出纳两个角色就是互斥的</li><li>基数约束：角色被分配到的用户有数量上限，例如公司中只有一个 CEO 职位，那么这个角色的数量就是有限的</li><li>先决条件角色：要拥有更高级别的角色权限，需要先获取到相对来说低级别的一些权限，例如副经理要想获取到总监级别权限，那么他需要先获取到经理级别的权限</li></ul></li><li>动态职责分离 DSD<ul><li>动态的限制用户及其拥有的角色，例如一个用户可以同时拥有两个角色，但是运行时只能激活一个角色</li></ul></li></ul><h3 id="统一模型RBAC3"><a href="#统一模型RBAC3" class="headerlink" title="统一模型RBAC3"></a>统一模型RBAC3</h3><p>RBAC3就是RBAC1和RBAC2的合集，所以RBAC3既有角色分层，也包括可以增加各种限制。——<strong>RBAC3&#x3D;RBAC1+RBAC2</strong></p><p>但是此模型只有在系统对权限要求非常复杂时，才考虑使用。因为其的复杂对开发和后期维护并不友好。</p><h2 id="数据库和RBAC模块功能设计"><a href="#数据库和RBAC模块功能设计" class="headerlink" title="数据库和RBAC模块功能设计"></a>数据库和RBAC模块功能设计</h2><p>数据库我们就可以根据<strong>用户，角色，权限三个分别建表</strong>，然后搭建<strong>用户和角色</strong>，<strong>角色和权限</strong>的映射关系。</p><p><img src="https://photobed-1309814171.cos.ap-guangzhou.myqcloud.com/img/202207162314855.png" alt="image-20220716231411782"></p><h2 id="Golong访问控制框架——Casbin"><a href="#Golong访问控制框架——Casbin" class="headerlink" title="Golong访问控制框架——Casbin"></a>Golong访问控制框架——Casbin</h2>]]></content>
+      
+      
+      <categories>
+          
+          <category> 后端学习笔记 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> RBAC模型 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>数据库主键ID生成策略</title>
+      <link href="/2022/08/13/%E6%95%B0%E6%8D%AE%E5%BA%93%E4%B8%BB%E9%94%AEID%E7%94%9F%E6%88%90%E7%AD%96%E7%95%A5/"/>
+      <url>/2022/08/13/%E6%95%B0%E6%8D%AE%E5%BA%93%E4%B8%BB%E9%94%AEID%E7%94%9F%E6%88%90%E7%AD%96%E7%95%A5/</url>
+      
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h1 id="数据库主键ID生成策略"><a href="#数据库主键ID生成策略" class="headerlink" title="数据库主键ID生成策略"></a>数据库主键ID生成策略</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>系统唯一ID是我们在设计一个系统的时候常常会遇见的问题。而生成数据库的ID有很多种方法，常见的有基于数据库的自增ID，Oracle 可以有sequence，MySQL可以使用auto_increment。在系统<strong>并发量不大</strong>的情况下，这些都是可行的办法。但是如果并发量比较大，数据库很快会成为整个系统的瓶颈。另外，有时候我们希望主键只是<strong>渐进递增</strong>，并不是逐个递增，比如订单表。因此这里就记录一下常见的数据库主键ID的生成策略。</p><h2 id="常见的主键生成策略"><a href="#常见的主键生成策略" class="headerlink" title="常见的主键生成策略"></a>常见的主键生成策略</h2><h3 id="数据库自增ID"><a href="#数据库自增ID" class="headerlink" title="数据库自增ID"></a><strong>数据库自增ID</strong></h3><p>基于数据库的自增ID完全可以实现主键ID的生成，例如在Mysql中建表时加上auto_increment。</p><p><strong>优点：</strong></p><ul><li>实现简单，ID单调自增，数值类型查询速度快</li></ul><p><strong>缺点：</strong></p><ul><li>DB单点存在宕机风险，无法扛住高并发场景</li><li>无法在写入数据之前获得数据的ID，必须要在提交数据库之后才会返回ID</li><li>ID的产生依赖于数据库，会降低数据库性能</li></ul><h3 id="基于数据库集群模式"><a href="#基于数据库集群模式" class="headerlink" title="基于数据库集群模式"></a><strong>基于数据库集群模式</strong></h3><p>这个策略就是依据上个的方式进行优化，将其换成主从模式集群。害怕一个主节点挂掉没法用，那就做双主模式集群，也就是两个Mysql实例都能单独的生产自增ID。但是这个需要对两个数据库进行<strong>设置防止生成重复的ID</strong>。</p><p>解决方案：分别设置<strong>起始值和自增步长</strong></p><p><img src="https://photobed-1309814171.cos.ap-guangzhou.myqcloud.com/img/202207261658085.png" alt="image-20220726165851971"></p><p><strong>优点：</strong></p><ul><li>解决DB单点问题</li></ul><p><strong>缺点：</strong></p><ul><li>不利于后续扩容，而且实际上单个数据库自身压力还是大，依旧无法满足高并发场景。</li></ul><h3 id="使用集中的ID生成策略"><a href="#使用集中的ID生成策略" class="headerlink" title="使用集中的ID生成策略"></a><strong>使用集中的ID生成策略</strong></h3><p>也就是专门提供一个服务用于批量生成ID：例如利用<code>redis</code>的 <code>incr</code>命令实现ID的原子性自增。</p><p>但是用<code>redis</code>实现需要注意要考虑到redis持久化的问题，例：</p><ul><li><code>RDB</code>会定时打一个快照进行持久化，假如连续自增但<code>redis</code>没及时持久化，而这会Redis挂掉了，重启Redis后会出现ID重复的情况。</li><li><code>AOF</code>会对每条写命令进行持久化，即使<code>Redis</code>挂掉了也不会出现ID重复的情况，但由于incr命令的特殊性，会导致<code>Redis</code>重启恢复的数据时间过长。</li></ul><p>而且这种方式最大的缺陷是又引入一个外部系统，依赖外部系统又会带来新的不稳定性。</p><h3 id="基于UUID"><a href="#基于UUID" class="headerlink" title="基于UUID"></a><strong>基于UUID</strong></h3><p>UUID大家都比较熟悉了，它有着全球唯一的特性，通过 <strong>MAC 地址、时间戳、命名空间、随机数、伪随机数</strong>来保证生成 ID 的唯一性。</p><p><strong>优点：</strong></p><ul><li>生成足够简单，本地生成无网络消耗，具有唯一性</li><li>在遇见数据迁移，系统数据合并，或者数据库变更等情况下，可以从容应对</li></ul><p><strong>缺点：</strong></p><ul><li>无序的字符串，不具备趋势自增特性</li><li>没有具体的业务含义</li><li>长度过长16 字节128位，36位长度的字符串，存储以及查询对MySQL的性能消耗较大，MySQL官方明确建议主键要尽量越短越好，作为数据库主键 <code>UUID</code> 的无序性会导致数据位置频繁变动，严重影响性能。</li><li>传输数据量大</li></ul><h3 id="基于雪花算法模式——推荐使用"><a href="#基于雪花算法模式——推荐使用" class="headerlink" title="基于雪花算法模式——推荐使用"></a><strong>基于雪花算法模式——推荐使用</strong></h3><p>snowflake 是 Twitter 开源的分布式 ID 生成算法，<strong>结果是一个 long 型的 ID</strong>。其核心思想是<strong>时间戳+机器标识+自增序列的方式实现全局唯一ID</strong>：使用 41bit 作为毫秒数，10bit 作为机器的 ID（5 个 bit 是数据中心，5 个 bit 的机器 ID），12bit 作为毫秒内的流水号（意味着每个节点在每毫秒可以产生 4096 个 ID），最后还有一个符号位，永远是 0。snowflake 算法可以根据自身项目的需要进行一定的修改。比如估算未来的数据中心个数，每个数据中心的机器数以及统一毫秒可以能的并发数来调整在算法中所需要的 bit 数。</p><p><img src="https://photobed-1309814171.cos.ap-guangzhou.myqcloud.com/img/202207261741402.png" alt="image-20220726174129353"></p><p><strong>优点：</strong></p><ul><li>不依赖于数据库，灵活方便，且性能优于数据库。</li><li>ID 按照时间在单机上是递增的，渐进有序</li><li>没有引入外部服务，没有网络调用的开销，安全高效</li></ul><p><strong>缺点：</strong></p><ul><li><strong>注意CPU时钟回拨的问题</strong>：在单机上是递增的，但是由于涉及到分布式环境，每台机器上的时钟不可能完全同步，也许有时候也会出现不是全局递增的情况。</li></ul><p>用go语言使用雪花算法实例：</p><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 初始化 ID 生成器</span></span><br><span class="line">startTime, _ := time.Parse(<span class="string">&quot;2006-01-02 15:04:05&quot;</span>, global.START_TIME)</span><br><span class="line">global.ID_GENERATOR = sonyflake.NewSonyflake(sonyflake.Settings&#123;</span><br><span class="line">StartTime: startTime,</span><br><span class="line">&#125;)</span><br><span class="line"><span class="comment">//定义标识</span></span><br><span class="line"><span class="keyword">var</span>(</span><br><span class="line">ID_GENERATOR         *sonyflake.Sonyflake     <span class="comment">// 主键生成器</span></span><br><span class="line">    START_TIME           = <span class="string">&quot;2022-07-26 00:00:01&quot;</span>  <span class="comment">// 固定启动时间，保证生成 ID 唯一性</span></span><br><span class="line">)</span><br><span class="line"><span class="comment">//生成增长的 userID</span></span><br><span class="line">UserID, _ = global.ID_GENERATOR.NextID() </span><br></pre></td></tr></table></figure><p>其中还有其它基于Snowflake的衍生算法</p><p><img src="https://photobed-1309814171.cos.ap-guangzhou.myqcloud.com/img/202207261849515.png" alt="image-20220726184937462"></p><h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>要根据业务的类型，确定适当的主键策略。在一些访问并发量和数据量并不是特别大的表上，使用数据库递增的策略也是可取的。甚至说没有必要使用Long作为主键的类型。而Snowflake算法的正确性是基于时间只能往前，不能后退的假设。这个假设在绝大多数时候都是成立的。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 后端学习笔记 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 主键ID生成策略 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>CAP定理和BASE理论</title>
+      <link href="/2022/08/13/CAP%E5%AE%9A%E7%90%86%E5%92%8CBASE%E7%90%86%E8%AE%BA/"/>
+      <url>/2022/08/13/CAP%E5%AE%9A%E7%90%86%E5%92%8CBASE%E7%90%86%E8%AE%BA/</url>
+      
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h1 id="CAP定理和BASE理论"><a href="#CAP定理和BASE理论" class="headerlink" title="CAP定理和BASE理论"></a>CAP定理和BASE理论</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在学习Kafka途中了解到了分布式事务，而分布式事务是随着互联网高速发展应运而生的，且数据库的ACID四大特性已经无法满足我们的分布式事务，这个时候又有一些新的大佬提出一些新的理论。而这两个理论就是分布式事务的基础。</p><h2 id="CAP定理"><a href="#CAP定理" class="headerlink" title="CAP定理"></a>CAP定理</h2><ul><li><strong>C (一致性)</strong>:对某个指定的客户端来说，读操作能返回最新的写操作。对于数据分布在不同节点上的数据上来说，如果在某个节点更新了数据，那么在其他节点如果都能读取到这个最新的数据，那么就称为强一致，如果有某个节点没有读取到，那就是分布式不一致。</li><li>**A (可用性)**：即服务一直可用，而且是正常响应时间。可用性的两个关键一个是合理的时间，一个是合理的响应。合理的时间指的是请求不能无限被阻塞，应该在合理的时间给出返回。合理的响应指的是系统应该明确返回结果并且结果是正确的，这里的正确指的是比如应该返回50，而不是返回40。</li><li><strong>P (分区容错性)</strong>:当出现网络分区后，系统能够继续工作。打个比方，这里个集群有多台机器，有台机器网络出现了问题，但是这个集群仍然可以正常工作。</li></ul><p>CAP 理论为：一个分布式系统最多只能同时满足一致性（Consistency）、可用性（Availability）和分区容错性（Partition tolerance）这三项中的<strong>两项</strong>。</p><p>在分布式系统中，网络无法100%可靠，<strong>分区其实是一个必然现象</strong>，如果我们选择了CA而放弃了P，那么当发生分区现象时，为了保证一致性，这个时候必须拒绝请求，但是A又不允许，所以分布式系统理论上不可能选择CA架构，只能选择CP或者AP架构。</p><p>对于CP来说，放弃可用性，追求一致性和分区容错性，我们的zookeeper其实就是追求的强一致。</p><p>对于AP来说，放弃一致性(这里说的一致性是强一致性)，追求分区容错性和可用性，这是很多分布式系统设计时的选择。</p><h2 id="BASE-理论"><a href="#BASE-理论" class="headerlink" title="BASE 理论"></a>BASE 理论</h2><p>BASE 理论是对 CAP 理论的延伸，核心思想是即使无法做到强一致性（Strong Consistency，CAP 的一致性就是强一致性），但应用可以采用适合的方式达到最终一致性（Eventual Consitency）。</p><p><strong>基本可用（Basically Available）</strong></p><p>基本可用是指分布式系统在出现故障的时候，允许损失部分可用性，即保证核心可用。</p><p>电商大促时，为了应对访问量激增，部分用户可能会被引导到降级页面，服务层也可能只提供降级服务。这就是损失部分可用性的体现。</p><p> <strong>软状态（Soft State）</strong></p><p>软状态是指允许系统存在中间状态，而该中间状态不会影响系统整体可用性。分布式存储中一般一份数据至少会有三个副本，允许不同节点间副本同步的延时就是软状态的体现。mysql replication 的异步复制也是一种体现。</p><p> <strong>最终一致性（Eventual Consistency）</strong></p><p>最终一致性是指系统中的所有数据副本经过一定时间后，最终能够达到一致的状态。弱一致性和强一致性相反，最终一致性是弱一致性的一种特殊情况。</p><h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>ACID 是传统数据库常用的设计理念，追求强一致性模型。BASE 支持的是大型分布式系统，提出通过牺牲强一致性获得高可用性并允许数据在一段时间内是不一致的，但最终达到一致状态。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 后端学习笔记 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> CAP定理和BASE理论 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>链表队列栈</title>
       <link href="/2022/07/11/%E9%93%BE%E8%A1%A8%E9%98%9F%E5%88%97%E6%A0%88/"/>
       <url>/2022/07/11/%E9%93%BE%E8%A1%A8%E9%98%9F%E5%88%97%E6%A0%88/</url>
@@ -20,7 +95,7 @@
       
         <tags>
             
-            <tag> 链表队列栈 </tag>
+            <tag> 数据结构 </tag>
             
         </tags>
       
@@ -95,7 +170,7 @@
       
         <tags>
             
-            <tag> Mybatis </tag>
+            <tag> SSM </tag>
             
         </tags>
       
@@ -120,7 +195,7 @@
       
         <tags>
             
-            <tag> Spring </tag>
+            <tag> SSM </tag>
             
         </tags>
       
@@ -145,7 +220,7 @@
       
         <tags>
             
-            <tag> SpringMvc </tag>
+            <tag> SSM </tag>
             
         </tags>
       

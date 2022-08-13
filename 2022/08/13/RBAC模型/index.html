@@ -1,0 +1,254 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>RBAC模型 | Hustle's Blog</title><meta name="keywords" content="RBAC模型"><meta name="author" content="Hustle-Lf"><meta name="copyright" content="Hustle-Lf"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="角色权限控制模型">
+<meta property="og:type" content="article">
+<meta property="og:title" content="RBAC模型">
+<meta property="og:url" content="https://quensa.github.io/2022/08/13/RBAC%E6%A8%A1%E5%9E%8B/index.html">
+<meta property="og:site_name" content="Hustle&#39;s Blog">
+<meta property="og:description" content="角色权限控制模型">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://w.wallhaven.cc/full/57/wallhaven-57e317.jpg">
+<meta property="article:published_time" content="2022-08-13T08:46:38.944Z">
+<meta property="article:modified_time" content="2022-08-13T08:49:04.083Z">
+<meta property="article:author" content="Hustle-Lf">
+<meta property="article:tag" content="RBAC模型">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://w.wallhaven.cc/full/57/wallhaven-57e317.jpg"><link rel="shortcut icon" href="/img/tubiao.png"><link rel="canonical" href="https://quensa.github.io/2022/08/13/RBAC%E6%A8%A1%E5%9E%8B/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":200},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":50,"languages":{"author":"作者: Hustle-Lf","link":"链接: ","source":"来源: Hustle's Blog","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'RBAC模型',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-08-13 16:49:04'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/style.css"><meta name="generator" content="Hexo 6.0.0"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/./img/tx.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data is-center"><div class="data-item"><a href="/archives/"><div class="headline">文章</div><div class="length-num">9</div></a></div><div class="data-item"><a href="/tags/"><div class="headline">标签</div><div class="length-num">7</div></a></div><div class="data-item"><a href="/categories/"><div class="headline">分类</div><div class="length-num">3</div></a></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://w.wallhaven.cc/full/57/wallhaven-57e317.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Hustle's Blog</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">RBAC模型</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-08-13T08:46:38.944Z" title="发表于 2022-08-13 16:46:38">2022-08-13</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-08-13T08:49:04.083Z" title="更新于 2022-08-13 16:49:04">2022-08-13</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%90%8E%E7%AB%AF%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">后端学习笔记</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">1k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>3分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="RBAC模型"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="RBAC模型"><a href="#RBAC模型" class="headerlink" title="RBAC模型"></a>RBAC模型</h1><h2 id="RBAC介绍"><a href="#RBAC介绍" class="headerlink" title="RBAC介绍"></a>RBAC介绍</h2><p>RBAC（Role-Based Access Control）权限模型即：基于角色的权限控制。通过角色关联用户，角色关联权限的方式间接赋予用户权限。</p>
+<p>在我们的生活中，不同的用户肯定会赋予不同的权限，而这个RBAC模型就是基于角色的访问控制的一种权限模型。</p>
+<p><img src="https://image.woshipm.com/wp-files/2016/11/vIReQ3fevo3UUetTeKjP.png" alt="1"></p>
+<p>而权限一般的想法是只要给用户分配权限就行了，何必多此一举，中间加一个角色给权限找个中间商？——其实之所以在中间加一层角色，是为了增加安全性和效率，而且后续扩展上也会提升不少。</p>
+<p>比方：多个用户拥有相同的权限，在分配的时候就要分别为这几个用户指定相同的权限，修改时也要为这几个用户的权限进行一一修改。有了角色后，只需要为该角色制定好权限后，将相同权限的用户都指定为同一个角色即可，便于权限管理。对于批量的用户权限调整，只需调整用户关联的角色权限，无需对每一个用户都进行权限调整，既大幅提升权限调整的效率，又降低了漏调权限的概率。就是通过控制角色的权限从而实现对用户的权限控制，在一定程度上能降低成本和消耗。</p>
+<h2 id="最基本模型——RBAC0"><a href="#最基本模型——RBAC0" class="headerlink" title="最基本模型——RBAC0"></a>最基本模型——RBAC0</h2><p>RBAC0模型，也是基础、最简单的，相当于底层逻辑。在这个模型中，我们把权限赋予角色，再把角色赋予用户。</p>
+<p>这个模型中又包含了2种：</p>
+<p>1.用户和角色是多对一关系，即：一个用户只充当一种角色，一种角色可以有多个用户担当。</p>
+<p>2.用户和角色是多对多关系，即：一个用户可同时充当多种角色（用户拥有的权限等于他所有的角色持有权限之和），一种角色可以有多个用户担当。（我们的系统就是使用的多对多）</p>
+<p><img src="https://image.woshipm.com/wp-files/2016/11/aF62T8Yu9fZ7APgdK2Zf.png" alt="2"></p>
+<h2 id="RBAC权限模型的类型"><a href="#RBAC权限模型的类型" class="headerlink" title="RBAC权限模型的类型"></a>RBAC权限模型的类型</h2><h3 id="角色分层模型RBAC1"><a href="#角色分层模型RBAC1" class="headerlink" title="角色分层模型RBAC1"></a>角色分层模型RBAC1</h3><p>相对于RBAC0模型，对角色这层元素上进行了细分<strong>引入了继承概念</strong>——可以继承某个基础角色生成子角色。简单理解就是，给角色可以分成几个等级，每个等级权限不同，从而实现更细粒度的权限管理。</p>
+<p><img src="https://photobed-1309814171.cos.ap-guangzhou.myqcloud.com/img/202207162256155.png" alt="image-20220716225642091"></p>
+<h3 id="角色限制模型RBAC2"><a href="#角色限制模型RBAC2" class="headerlink" title="角色限制模型RBAC2"></a>角色限制模型RBAC2</h3><p>RBAC2同样建立在RBAC0基础之上，仅是对用户、角色和权限三者之间增加了一些限制。这些限制可以分成两类，即<strong>静态职责分离SSD</strong>(Static Separation of Duty)和<strong>动态职责分离DSD</strong>(Dynamic Separation of Duty)</p>
+<ul>
+<li>静态职责分离 SSD<ul>
+<li>角色互斥：相同用户不能同时拥有互斥关系的角色，例如会计和出纳两个角色就是互斥的</li>
+<li>基数约束：角色被分配到的用户有数量上限，例如公司中只有一个 CEO 职位，那么这个角色的数量就是有限的</li>
+<li>先决条件角色：要拥有更高级别的角色权限，需要先获取到相对来说低级别的一些权限，例如副经理要想获取到总监级别权限，那么他需要先获取到经理级别的权限</li>
+</ul>
+</li>
+<li>动态职责分离 DSD<ul>
+<li>动态的限制用户及其拥有的角色，例如一个用户可以同时拥有两个角色，但是运行时只能激活一个角色</li>
+</ul>
+</li>
+</ul>
+<h3 id="统一模型RBAC3"><a href="#统一模型RBAC3" class="headerlink" title="统一模型RBAC3"></a>统一模型RBAC3</h3><p>RBAC3就是RBAC1和RBAC2的合集，所以RBAC3既有角色分层，也包括可以增加各种限制。——<strong>RBAC3&#x3D;RBAC1+RBAC2</strong></p>
+<p>但是此模型只有在系统对权限要求非常复杂时，才考虑使用。因为其的复杂对开发和后期维护并不友好。</p>
+<h2 id="数据库和RBAC模块功能设计"><a href="#数据库和RBAC模块功能设计" class="headerlink" title="数据库和RBAC模块功能设计"></a>数据库和RBAC模块功能设计</h2><p>数据库我们就可以根据<strong>用户，角色，权限三个分别建表</strong>，然后搭建<strong>用户和角色</strong>，<strong>角色和权限</strong>的映射关系。</p>
+<p><img src="https://photobed-1309814171.cos.ap-guangzhou.myqcloud.com/img/202207162314855.png" alt="image-20220716231411782"></p>
+<h2 id="Golong访问控制框架——Casbin"><a href="#Golong访问控制框架——Casbin" class="headerlink" title="Golong访问控制框架——Casbin"></a>Golong访问控制框架——Casbin</h2></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Hustle-Lf</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://quensa.github.io/2022/08/13/RBAC%E6%A8%A1%E5%9E%8B/">https://quensa.github.io/2022/08/13/RBAC%E6%A8%A1%E5%9E%8B/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://quensa.github.io" target="_blank">Hustle's Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/RBAC%E6%A8%A1%E5%9E%8B/">RBAC模型</a></div><div class="post_share"><div class="social-share" data-image="https://w.wallhaven.cc/full/57/wallhaven-57e317.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i> 打赏</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/wx.jpg" target="_blank"><img class="post-qr-code-img" src="/img/wx.jpg" alt="微信"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="/img/zhb.jpg" target="_blank"><img class="post-qr-code-img" src="/img/zhb.jpg" alt="支付宝"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-full"><a href="/2022/08/13/%E6%95%B0%E6%8D%AE%E5%BA%93%E4%B8%BB%E9%94%AEID%E7%94%9F%E6%88%90%E7%AD%96%E7%95%A5/"><img class="prev-cover" src="https://w.wallhaven.cc/full/m9/wallhaven-m9jqz9.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">数据库主键ID生成策略</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#RBAC%E6%A8%A1%E5%9E%8B"><span class="toc-number">1.</span> <span class="toc-text">RBAC模型</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#RBAC%E4%BB%8B%E7%BB%8D"><span class="toc-number">1.1.</span> <span class="toc-text">RBAC介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%80%E5%9F%BA%E6%9C%AC%E6%A8%A1%E5%9E%8B%E2%80%94%E2%80%94RBAC0"><span class="toc-number">1.2.</span> <span class="toc-text">最基本模型——RBAC0</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#RBAC%E6%9D%83%E9%99%90%E6%A8%A1%E5%9E%8B%E7%9A%84%E7%B1%BB%E5%9E%8B"><span class="toc-number">1.3.</span> <span class="toc-text">RBAC权限模型的类型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%92%E8%89%B2%E5%88%86%E5%B1%82%E6%A8%A1%E5%9E%8BRBAC1"><span class="toc-number">1.3.1.</span> <span class="toc-text">角色分层模型RBAC1</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%92%E8%89%B2%E9%99%90%E5%88%B6%E6%A8%A1%E5%9E%8BRBAC2"><span class="toc-number">1.3.2.</span> <span class="toc-text">角色限制模型RBAC2</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%9F%E4%B8%80%E6%A8%A1%E5%9E%8BRBAC3"><span class="toc-number">1.3.3.</span> <span class="toc-text">统一模型RBAC3</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E5%92%8CRBAC%E6%A8%A1%E5%9D%97%E5%8A%9F%E8%83%BD%E8%AE%BE%E8%AE%A1"><span class="toc-number">1.4.</span> <span class="toc-text">数据库和RBAC模块功能设计</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Golong%E8%AE%BF%E9%97%AE%E6%8E%A7%E5%88%B6%E6%A1%86%E6%9E%B6%E2%80%94%E2%80%94Casbin"><span class="toc-number">1.5.</span> <span class="toc-text">Golong访问控制框架——Casbin</span></a></li></ol></li></ol></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2022 By Hustle-Lf</div><div class="footer_custom_text">勿因喜而轻诺</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">本地搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.js"></script><script src="/js/search/local-search.js"></script><script>var preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',preloader.endLoading())</script><div class="js-pjax"></div><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="99" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-nest.min.js"></script><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>let pjaxSelectors = ["title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"]):not([href="/archives/"]):not([href="/tags/"]):not([href="/categories/"]):not([href="/link/"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+
+  // removeEventListener scroll 
+  window.tocScrollFn && window.removeEventListener('scroll', window.tocScrollFn)
+  window.scrollCollect && window.removeEventListener('scroll', scrollCollect)
+
+  typeof preloader === 'object' && preloader.initLoading()
+  document.getElementById('rightside').style.cssText = "opacity: ''; transform: ''"
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof chatBtnFn === 'function' && chatBtnFn()
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+
+  typeof preloader === 'object' && preloader.endLoading()
+})
+
+document.addEventListener('pjax:error', (e) => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
