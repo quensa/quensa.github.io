@@ -128,6 +128,20 @@
 
   
   <url>
+    <loc>https://quensa.github.io/tags/RBAC%E6%A8%A1%E5%9E%8B/</loc>
+    <lastmod>2022-11-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://quensa.github.io/tags/SSM/</loc>
+    <lastmod>2022-11-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://quensa.github.io/tags/CAP%E5%AE%9A%E7%90%86%E5%92%8CBASE%E7%90%86%E8%AE%BA/</loc>
     <lastmod>2022-11-23</lastmod>
     <changefreq>weekly</changefreq>
@@ -142,21 +156,7 @@
   </url>
   
   <url>
-    <loc>https://quensa.github.io/tags/RBAC%E6%A8%A1%E5%9E%8B/</loc>
-    <lastmod>2022-11-23</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://quensa.github.io/tags/%E4%B8%BB%E9%94%AEID%E7%94%9F%E6%88%90%E7%AD%96%E7%95%A5/</loc>
-    <lastmod>2022-11-23</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://quensa.github.io/tags/SSM/</loc>
     <lastmod>2022-11-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
