@@ -1,0 +1,501 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>图解HTTP | Hustle's Blog</title><meta name="keywords" content="图解HTTP"><meta name="author" content="Hustle-Lf"><meta name="copyright" content="Hustle-Lf"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="图解HTTP笔记">
+<meta property="og:type" content="article">
+<meta property="og:title" content="图解HTTP">
+<meta property="og:url" content="https://quensa.github.io/2022/12/25/%E5%9B%BE%E8%A7%A3HTTP/index.html">
+<meta property="og:site_name" content="Hustle&#39;s Blog">
+<meta property="og:description" content="图解HTTP笔记">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://th.wallhaven.cc/small/5g/5gwvz5.jpg">
+<meta property="article:published_time" content="2022-12-25T12:43:09.872Z">
+<meta property="article:modified_time" content="2022-12-25T12:52:46.313Z">
+<meta property="article:author" content="Hustle-Lf">
+<meta property="article:tag" content="图解HTTP">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://th.wallhaven.cc/small/5g/5gwvz5.jpg"><link rel="shortcut icon" href="/img/tubiao.png"><link rel="canonical" href="https://quensa.github.io/2022/12/25/%E5%9B%BE%E8%A7%A3HTTP/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":200},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":50,"languages":{"author":"作者: Hustle-Lf","link":"链接: ","source":"来源: Hustle's Blog","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '图解HTTP',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-12-25 20:52:46'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/style.css"><meta name="generator" content="Hexo 6.0.0"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/./img/black.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data is-center"><div class="data-item"><a href="/archives/"><div class="headline">文章</div><div class="length-num">13</div></a></div><div class="data-item"><a href="/tags/"><div class="headline">标签</div><div class="length-num">11</div></a></div><div class="data-item"><a href="/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://th.wallhaven.cc/small/5g/5gwvz5.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Hustle's Blog</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">图解HTTP</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-12-25T12:43:09.872Z" title="发表于 2022-12-25 20:43:09">2022-12-25</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-12-25T12:52:46.313Z" title="更新于 2022-12-25 20:52:46">2022-12-25</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%90%8E%E7%AB%AF%E5%85%AB%E8%82%A1%E7%AC%94%E8%AE%B0/">后端八股笔记</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">10.2k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>31分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="图解HTTP"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="图解HTTP"><a href="#图解HTTP" class="headerlink" title="图解HTTP"></a>图解HTTP</h1><p><img src="https://photobed-1309814171.cos.ap-guangzhou.myqcloud.com/img/image.png" alt="img"></p>
+<h2 id="了解Web网络基础"><a href="#了解Web网络基础" class="headerlink" title="了解Web网络基础"></a><strong>了解Web网络基础</strong></h2><p>**客户端:**通过发送请求获取服务器资源（例如：web浏览器)</p>
+<p>web使用一种名为HTTP(HypterText Transfer Protocol,超文本传输协议)的协议作为规范，完成从客户端到服务器端等一系列运作流程。</p>
+<h3 id="网络基础TCP-x2F-IP"><a href="#网络基础TCP-x2F-IP" class="headerlink" title="网络基础TCP&#x2F;IP"></a>网络基础TCP&#x2F;IP</h3><p>通常使用的网络(包括互联网)是在TCP&#x2F;IP协议族的基础上运作的。而HTTP属于它内部的一个子集。</p>
+<p>TCP&#x2F;IP 协议族里重要的一点就是分层。TCP&#x2F;IP 协议族按层次分别分为以下 4 层：<strong>应用层、传输层、网络层和数据链路层。</strong></p>
+<table>
+<thead>
+<tr>
+<th>层次</th>
+<th align="left">作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>应用层</td>
+<td align="left"><strong>决定了向用户提供应用服务时通信的活动，如FTP文件传输协议)和DNS。</strong></td>
+</tr>
+<tr>
+<td>传输层</td>
+<td align="left"><strong>对上层应用层，提供处于网络连接中国的两台计算机之间的数据传输，如 TCP和UDP.</strong></td>
+</tr>
+<tr>
+<td>网络层</td>
+<td align="left"><strong>c处理在网络上流动的数据包，数据包是网络传输的最小数据单位，该层规定了通过怎样的路径到达对方计算机，</strong></td>
+</tr>
+<tr>
+<td>链路层</td>
+<td align="left"><strong>用来处理连接网络的硬件部分。</strong></td>
+</tr>
+</tbody></table>
+<h3 id="TCP-x2F-IP-通信传输流"><a href="#TCP-x2F-IP-通信传输流" class="headerlink" title="TCP&#x2F;IP 通信传输流"></a>TCP&#x2F;IP 通信传输流</h3><p><img src="https://photobed-1309814171.cos.ap-guangzhou.myqcloud.com/img/image-20220518193725636.png" alt="image-20220518193725636"></p>
+<h3 id="与-HTTP-关系密切的协议-IP、TCP-和-DNS"><a href="#与-HTTP-关系密切的协议-IP、TCP-和-DNS" class="headerlink" title="与 HTTP 关系密切的协议 : IP、TCP 和 DNS"></a>与 HTTP 关系密切的协议 : IP、TCP 和 DNS</h3><p>IP（Internet Protocol）网际<strong>协议</strong>位于<strong>网络层</strong></p>
+<p>IP 协议的作用是把各种数据包传送给对方。而要保证确实传送到对方那里，则需要满足各类条件。其中两个重要的条件是 <strong>IP 地址（可变换）</strong>和 <strong>MAC 地址（是指网卡所属的固定地址）</strong>（Media Access Control Address）。</p>
+<h4 id="TCP三次握手"><a href="#TCP三次握手" class="headerlink" title="TCP三次握手"></a>TCP三次握手</h4><p>TCP 协议采用了三次握手 （three-way handshaking）策略。用 TCP 协议把数据包送出去后，TCP 不会对传送后的情况置之不理，它一定会向对方确认是否成功送达。<strong>握手过程中使用了 TCP 的标志（flag） —— SYN（synchronize） 和 ACK（acknowledgement）。</strong></p>
+<p><img src="https://photobed-1309814171.cos.ap-guangzhou.myqcloud.com/img/image-20220518194740016.png" alt="image-20220518194740016"></p>
+<h4 id="负责域名解析的-DNS-服务"><a href="#负责域名解析的-DNS-服务" class="headerlink" title="负责域名解析的 DNS 服务"></a>负责域名解析的 DNS 服务</h4><p>DNS（Domain Name System）服务是和 HTTP 协议一样位于应用层的 协议。它提供域名到 IP 地址之间的解析服务。</p>
+<p><img src="https://photobed-1309814171.cos.ap-guangzhou.myqcloud.com/img/image-20220518195049008.png" alt="image-20220518195049008"></p>
+<p>总结：</p>
+<p><img src="https://photobed-1309814171.cos.ap-guangzhou.myqcloud.com/img/image-20220518200205547.png" alt="image-20220518200205547"></p>
+<h3 id="URI-和-URL"><a href="#URI-和-URL" class="headerlink" title="URI 和 URL"></a>URI 和 URL</h3><p>URI：统一资源<strong>标识</strong>符（Uniform Resource Identifier）就是由某个协议方案表示的资源的定位标识符。协议方案是指访问资源所使用的协议类型名称。采用 HTTP 协议时，协议方案就是 http。</p>
+<p>URL：统一资源<strong>定位</strong>符 用字符串标识某一互联网资源，而 URL表示资源的地点（互联网上所处的位置）。<strong>可见URL是 URI 的子集</strong>。</p>
+<p><img src="https://photobed-1309814171.cos.ap-guangzhou.myqcloud.com/img/image-20220518200104105.png" alt="image-20220518200104105"></p>
+<h2 id="简单的-HTTP-协议"><a href="#简单的-HTTP-协议" class="headerlink" title="简单的 HTTP 协议"></a><strong>简单的 HTTP 协议</strong></h2><h3 id="两种报文-一"><a href="#两种报文-一" class="headerlink" title="两种报文(一)"></a>两种报文(一)</h3><p><strong>请求报文</strong>是由请求方法、请求URI、协议版本、可选的请求首部字段和内容实体构成的。</p>
+<p><img src="https://photobed-1309814171.cos.ap-guangzhou.myqcloud.com/img/202207121009702.jpeg" alt="img"></p>
+<p><strong>响应报文</strong>基本上由协议版本、<a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=%E7%8A%B6%E6%80%81%E7%A0%81&spm=1001.2101.3001.7020">状态码</a>（表示请求成功或失败的数字代码）、用以解释状态码的原因短语、可选的响应首部字段以及实体主体构成。</p>
+<p><img src="https://photobed-1309814171.cos.ap-guangzhou.myqcloud.com/img/202207121010197.jpeg" alt="img"></p>
+<p>HTTP是一种不保存状态，即<strong>无状态（stateless）协议</strong>。HTTP协议自身不对请求和响应之间的通信状态进行保存。也就是说在HTTP这个级别，协议对于发送过的请求或响应都<strong>不做持久化处理</strong>。为了实现期望的保持状态功能，于是引入了Cookie技术。有了Cookie再用HTTP协议通信，就可以管理状态了。可以理解成<strong>Cookie是为了解决保持状态功能的作用</strong>。</p>
+<h3 id="告知服务器意图的HTTP方法"><a href="#告知服务器意图的HTTP方法" class="headerlink" title="告知服务器意图的HTTP方法"></a>告知服务器意图的HTTP方法</h3><p><strong>HTTP&#x2F;1.1中可使用的方法。</strong></p>
+<p><strong>①GET：获取资源</strong></p>
+<p>GET方法用来请求访问已被URI识别的资源。指定的资源经服务器端解析后返回响应内容。也就是说，如果请求的资源是文本，那就保持原样返回；如果是像CGI（Common Gateway Interface，通用<a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=%E7%BD%91%E5%85%B3&spm=1001.2101.3001.7020">网关</a>接口）那样的程序，则返回经过执行后的输出结果。</p>
+<p><img src="https://photobed-1309814171.cos.ap-guangzhou.myqcloud.com/img/202207121011901.png" alt="img"></p>
+<p><img src="https://photobed-1309814171.cos.ap-guangzhou.myqcloud.com/img/202207121011918.png" alt="img"></p>
+<p><strong>②POST：传输实体主体</strong></p>
+<p>POST方法用来传输实体的主体。虽然用GET方法也可以传输实体的主体，但一般不用GET方法进行传输，而是用POST方法。虽说POST的功能与GET很相似，<strong>但POST的主要目的并不是获取响应的主体内容</strong>。</p>
+<p><img src="https://photobed-1309814171.cos.ap-guangzhou.myqcloud.com/img/202207121011921.png" alt="img"></p>
+<p><strong>③PUT：传输文件</strong></p>
+<p>PUT方法用来传输文件。就像FTP协议的文件上传一样，要求在请求报文的主体中包含文件内容，然后保存到请求URI指定的位置。但是，鉴于HTTP&#x2F;1.1的PUT方法<strong>自身不带验证机制</strong>，任何人都可以上传文件，存在安全性问题，因此一般的Web网站<strong>不使用该方法</strong>。若配合Web应用程序的验证机制，或架构设计采用REST（Representational State Transfer，表征状态转移）标准的同类Web网站，就可能会开放使用PUT方法。</p>
+<p><img src="https://photobed-1309814171.cos.ap-guangzhou.myqcloud.com/img/202207121011945.png" alt="img"></p>
+<p><strong>④HEAD：获得报文首部</strong></p>
+<p>HEAD方法和GET方法一样，只是不返回报文主体部分。用于确认URI的有效性及资源更新的日期时间等。</p>
+<p><img src="https://photobed-1309814171.cos.ap-guangzhou.myqcloud.com/img/202207121011910.png" alt="img"></p>
+<p><strong>⑤DELETE：删除文件</strong></p>
+<p>DELETE方法用来删除文件，是与PUT相反的方法。DELETE方法按请求URI删除指定的资源。但是，HTTP&#x2F;1.1的<strong>DELETE方法本身和PUT方法一样不带验证机制</strong>，所以一般的Web网站也<strong>不使用DELETE方法</strong>。当配合Web应用程序的验证机制，或遵守REST标准时还是有可能会开放使用的。</p>
+<p><img src="https://photobed-1309814171.cos.ap-guangzhou.myqcloud.com/img/202207121011021.png" alt="img"></p>
+<p><strong>⑥OPTIONS：询问支持的方法</strong></p>
+<p>OPTIONS方法用来查询针对请求URI指定的资源支持的方法。</p>
+<p><img src="https://photobed-1309814171.cos.ap-guangzhou.myqcloud.com/img/202207121011311.png" alt="img"></p>
+<p><strong>⑦TRACE：追踪路径</strong></p>
+<p>TRACE方法是让Web服务器端将之前的请求通信环回给客户端的方法。</p>
+<p>发送请求时，在Max-Forwards首部字段中填入数值，每经过一个服务器端就将该数字减1，当数值刚好减到0时，就停止继续传输，最后接收到请求的服务器端则返回状态码200 OK的响应。客户端通过TRACE方法可以查询发送出去的请求是怎样被加工修改&#x2F;篡改的。这是因为，请求想要连接到源目标服务器可能会通过代理中转，TRACE方法就是用来确认连接过程中发生的一系列操作。</p>
+<p>但是，TRACE方法本来就不怎么常用，再加上它容易<strong>引发XST</strong>（Cross-SiteTracing，跨站追踪）攻击，通常就更<strong>不会用到</strong>了。</p>
+<p><img src="https://photobed-1309814171.cos.ap-guangzhou.myqcloud.com/img/202207121011470.png" alt="img"></p>
+<p><img src="https://photobed-1309814171.cos.ap-guangzhou.myqcloud.com/img/202207121011640.png" alt="img"></p>
+<p><strong>⑧CONNECT：要求用隧道协议连接代理</strong></p>
+<p>CONNECT方法要求在与代理服务器通信时建立隧道，实现用隧道协议进行TCP通信。主要使用SSL（Secure Sockets Layer，安全套接层）和TLS（TransportLayer Security，传输层安全）协议把通信内容加密后经网络隧道传输。</p>
+<p><img src="https://photobed-1309814171.cos.ap-guangzhou.myqcloud.com/img/202207121011707.png" alt="img"></p>
+<p><img src="https://photobed-1309814171.cos.ap-guangzhou.myqcloud.com/img/202207121011653.png" alt="img"></p>
+<p>下表列出了HTTP&#x2F;1.0和HTTP&#x2F;1.1支持的方法。另外，方法名区分大小写，注意要用大写字母。LINK和UNLINK已被HTTP&#x2F;1.1废弃，不再支持。</p>
+<p><img src="https://photobed-1309814171.cos.ap-guangzhou.myqcloud.com/img/202207121029926.png" alt="img"></p>
+<h3 id="持久连接节省通信量"><a href="#持久连接节省通信量" class="headerlink" title="持久连接节省通信量"></a>持久连接节省通信量</h3><p>HTTP协议的<strong>初始版本</strong>中，每进行一次HTTP通信就要断开一次TCP连接。HTTP协议的初始版本中，每进行一次HTTP通信就要断开一次TCP连接。<strong>当浏览一个包含多张图片的HTML页面，每次的请求都会造成无谓的TCP连接建立和断开，增加通信量的开销。</strong></p>
+<p>为解决上述TCP连接的问题，HTTP&#x2F;1.1和一部分的HTTP&#x2F;1.0想出了持久连接（HTTP Persistent Connections，也称为<strong>HTTP keep-alive</strong>或HTTP connectionreuse）的方法。</p>
+<p>持久连接的特点是，只要任意一端没有明确提出断开连接，则保持TCP连接状态。（<strong>持久连接旨在建立1次TCP连接后进行多次请求和响应的交互</strong>）</p>
+<p><strong>持久连接的好处在于减少了TCP连接的重复建立和断开所造成的额外开销，减轻了服务器端的负载。另外，减少开销的那部分时间，使HTTP请求和响应能够更早地结束，这样Web页面的显示速度也就相应提高了。</strong></p>
+<p>在<strong>HTTP&#x2F;1.1</strong>中，所有的连接<strong>默认都是持久连接</strong>，但在<strong>HTTP&#x2F;1.0内并未标准化</strong>。虽然有一部分服务器通过非标准的手段实现了持久连接，但服务器端不一定能够支持持久连接。毫无疑问，除了服务器端，客户端也需要支持持久连接。</p>
+<h3 id="管线化"><a href="#管线化" class="headerlink" title="管线化"></a>管线化</h3><p>管线化技术出现后，不用等待响应亦可直接发送下一个请求。这样就能够做到同时并行发送多个请求，而不需要一个接一个地等待响应了。</p>
+<p><img src="https://photobed-1309814171.cos.ap-guangzhou.myqcloud.com/img/202207121036246.png" alt="img"></p>
+<p>比如，当请求一个包含10张图片的HTML Web页面，与挨个连接相比，<strong>用持久连接可以让请求更快结束</strong>。而<strong>管线化技术则比持久连接还要快。请求数越多，时间差就越明显。</strong></p>
+<h2 id="返回结果的HTTP状态码"><a href="#返回结果的HTTP状态码" class="headerlink" title="返回结果的HTTP状态码"></a>返回结果的HTTP状态码</h2><p><strong>状态码</strong>的职责是当客户端向服务器端发送请求时，<strong>描述返回的请求结果</strong>。借助状态码，用户可以知道服务器端是正常处理了请求，还是出现了错误。</p>
+<p><img src="https://photobed-1309814171.cos.ap-guangzhou.myqcloud.com/img/202207131615014.png" alt="img"></p>
+<p>状态码如200 OK，以3位数字和原因短语组成。数字中的第一位指定了响应类别，后两位无分类。响应类别有以下5种。</p>
+<p><img src="https://photobed-1309814171.cos.ap-guangzhou.myqcloud.com/img/202207131615965.png" alt="img"></p>
+<p>只要遵守状态码类别的定义，即使改变RFC2616中定义的状态码，或服务器端自行创建状态码都没问题。仅记录在RFC2616上的HTTP状态码就达40种，若再加上WebDAV（Web-basedDistributed Authoring and Versioning，基于万维网的分布式创作和版本控制）（RFC4918、5842）和附加HTTP状态码（RFC6585）等扩展，数量就达60余种。别看种类繁多，实际上经常使用的大概只有14种。接下来，我们就介绍一下这些具有代表性的14个状态码。</p>
+<h3 id="2XX成功"><a href="#2XX成功" class="headerlink" title="2XX成功"></a>2XX成功</h3><p><strong>200 OK</strong></p>
+<p><img src="https://photobed-1309814171.cos.ap-guangzhou.myqcloud.com/img/202207131615134.png" alt="img"></p>
+<p>表示从客户端发来的请求在服务器端被<strong>正常处理</strong>了。在响应报文内，随状态码一起返回的信息会因方法的不同而发生改变。比如，使用GET方法时，对应请求资源的实体会作为响应返回；而使用HEAD方法时，对应请求资源的实体主体不随报文首部作为响应返回（即在响应中只返回首部，不会返回实体的主体部分）。</p>
+<p><strong>204 No Content</strong></p>
+<p><img src="https://photobed-1309814171.cos.ap-guangzhou.myqcloud.com/img/202207131615873.png" alt="img"></p>
+<p>该状态码代表服务器接收的请求已<strong>成功处理</strong>，<strong>但在返回的响应报文中不含实体的主体部分</strong>。另外，也不允许返回任何实体的主体。比如，当从浏览器发出请求处理后，返回204响应，那么浏览器显示的页面不发生更新。一般在只需要从客户端往服务器发送信息，而对客户端不需要发送新信息内容的情况下使用。</p>
+<p><strong>206 Partial Content</strong></p>
+<p><img src="https://photobed-1309814171.cos.ap-guangzhou.myqcloud.com/img/202207131615962.png" alt="img"></p>
+<p>该状态码表示客户端进行了<strong>范围请求</strong>，而服务器<strong>成功执行</strong>了这部分的GET请求。响应报文中包含由Content-Range指定范围的实体内容。</p>
+<h3 id="3XX重定向"><a href="#3XX重定向" class="headerlink" title="3XX重定向"></a>3XX重定向</h3><p>3XX响应结果表明浏览器需要执行某些特殊的处理以正确处理请求。</p>
+<p><strong>301 Moved Permanently</strong></p>
+<p><img src="https://photobed-1309814171.cos.ap-guangzhou.myqcloud.com/img/202207131615863.png" alt="img"></p>
+<p><strong>永久性重定向</strong>。该状态码表示请求的资源已被分配了新的URI，以后应使用资源现在所指的URI。也就是说，如果已经把资源对应的URI保存为书签了，这时应该按Location首部字段提示的URI重新保存。像下方给出的请求URI，当指定资源路径的最后忘记添加斜杠“&#x2F;”，就会产生301状态码。（<a target="_blank" rel="noopener" href="http://example.com/sample%EF%BC%89">http://example.com/sample）</a></p>
+<p><strong>302 Found</strong></p>
+<p><img src="https://photobed-1309814171.cos.ap-guangzhou.myqcloud.com/img/202207131615533.png" alt="img"></p>
+<p><strong>临时性重定向</strong>。该状态码表示请求的资源已被分配了新的URI，希望用户（本次）能使用新的URI访问。和301 Moved Permanently状态码相似，但302状态码代表的资源不是被永久移动，只是临时性质的。换句话说，已移动的资源对应的URI将来还有可能发生改变。比如，用户把URI保存成书签，但不会像301状态码出现时那样去更新书签，而是仍旧保留返回302状态码的页面对应的URI。</p>
+<p><strong>303 See Other</strong></p>
+<p><img src="https://photobed-1309814171.cos.ap-guangzhou.myqcloud.com/img/202207131615750.png" alt="img"></p>
+<p>该状态码表示由于请求对应的资源存在着另一个URI，应使用GET方法定向获取请求的资源。303状态码和302 Found状态码有着相同的功能，但<strong>303状态码明确表示客户端应当采用GET方法获取资源</strong>，这点与302状态码有区别。</p>
+<p>比如，当使用POST方法访问CGI程序，其执行后的处理结果是希望客户端能以GET方法重定向到另一个URI上去时，返回303状态码。虽然302 Found状态码也可以实现相同的功能，但这里使用303状态码是最理想的。</p>
+<p><strong>Tips:</strong> 当301、302、303响应状态码返回时，几乎所有的浏览器都会把POST改成GET，并删除请求报文内的主体，之后请求会自动再次发送。301、302标准是禁止将POST方法改变成GET方法的，但实际使用时大家都会这么做。</p>
+<p><strong>304 Not Modified</strong></p>
+<p><img src="https://photobed-1309814171.cos.ap-guangzhou.myqcloud.com/img/202207131615689.png" alt="img"></p>
+<p>该状态码表示客户端发送附带条件的请求时，服务器端允许请求访问资源，但因发生<strong>请求未满足条件的情况</strong>后，直接返回304 Not Modified（服务器端资源未改变，可直接使用客户端未过期的缓存）。304状态码返回时，不包含任何响应的主体部分。304虽然被划分在3XX类别中，但是和重定向没有关系。</p>
+<p><strong>307 Temporary Redirect</strong></p>
+<p>临时重定向。该状态码与302 Found有着相同的含义。尽管302标准禁止POST变换成GET，但实际使用时大家并不遵守。</p>
+<p>307会遵照浏览器标准，不会从POST变成GET。但是，对于处理响应时的行为，每种浏览器有可能出现不同的情况。</p>
+<h3 id="4XX客户端错误"><a href="#4XX客户端错误" class="headerlink" title="4XX客户端错误"></a>4XX客户端错误</h3><p>4XX的响应结果表明<strong>客户端是发生错误</strong>的原因所在。</p>
+<p><strong>400 Bad Request</strong></p>
+<p><img src="https://photobed-1309814171.cos.ap-guangzhou.myqcloud.com/img/202207131615708.png" alt="img"></p>
+<p>该状态码表示<strong>请求报文中存在语法错误</strong>。当错误发生时，需修改请求的内容后再次发送请求。另外，浏览器会像200 OK一样对待该状态码。</p>
+<p><strong>401 Unauthorized</strong></p>
+<p><img src="https://photobed-1309814171.cos.ap-guangzhou.myqcloud.com/img/202207131615895.png" alt="img"></p>
+<p>该状态码表示发送的请求需要有通过HTTP认证（BASIC认证、DIGEST认证）的认证信息。另外若之前已进行过1次请求，则表示用户认证失败。返回含有401的响应必须包含一个适用于被请求资源的WWW-Authenticate首部用以质询（challenge）用户信息。当浏览器初次接收到401响应，会弹出认证用的对话窗口。</p>
+<p><strong>403 Forbidden</strong></p>
+<p><img src="https://photobed-1309814171.cos.ap-guangzhou.myqcloud.com/img/202207131615834.png" alt="img"></p>
+<p>该状态码表明对<strong>请求资源的访问被服务器拒绝</strong>了。服务器端没有必要给出拒绝的详细理由，但如果想作说明的话，可以在实体的主体部分对原因进行描述，这样就能让用户看到了。</p>
+<p>未获得文件系统的访问授权，访问权限出现某些问题（从未授权的发送源IP地址试图访问）等列举的情况都可能是发生403的原因。</p>
+<p><strong>404 Not Found</strong></p>
+<p><img src="https://photobed-1309814171.cos.ap-guangzhou.myqcloud.com/img/202207131615269.png" alt="img"></p>
+<p>该状态码表明<strong>服务器上无法找到请求的资源</strong>。除此之外，<strong>也可以在服务器端拒绝请求且不想说明理由时使用</strong>。</p>
+<h3 id="5XX服务器错误"><a href="#5XX服务器错误" class="headerlink" title="5XX服务器错误"></a>5XX服务器错误</h3><p>5XX的响应结果表明<strong>服务器本身发生错误</strong>。</p>
+<p><strong>500 Internal Server Error</strong></p>
+<p><img src="https://photobed-1309814171.cos.ap-guangzhou.myqcloud.com/img/202207131615304.png" alt="img"></p>
+<p>该状态码表明<strong>服务器端在执行请求时发生了错误</strong>。也有可能是Web应用存在的bug或某些临时的故障。</p>
+<p><strong>503 Service Unavailable</strong></p>
+<p><img src="https://photobed-1309814171.cos.ap-guangzhou.myqcloud.com/img/202207131615375.png" alt="img"></p>
+<p>该状态码表明<strong>服务器暂时处于超负载或正在进行停机维护</strong>，现在无法处理请求。如果事先得知解除以上状况需要的时间，最好写入Retry-After首部字段再返回给客户端。</p>
+<p>状态码和状况的不一致：不少返回的状态码响应都是错误的，但是用户可能察觉不到这点。比如Web应用程序内部发生错误，状态码依然返回200 OK，这种情况也经常遇到。</p>
+<h3 id="两种报文-二）"><a href="#两种报文-二）" class="headerlink" title="两种报文(二）"></a>两种报文(二）</h3><p><img src="https://photobed-1309814171.cos.ap-guangzhou.myqcloud.com/img/202207131618653.png" alt="img"></p>
+<p>HTTP协议的请求和响应报文中必定包含HTTP首部。首部内容为客户端和服务器分别处理请求和响应提供所需要的信息。对于客户端用户来说，这些信息中的大部分内容都无须亲自查看。</p>
+<p><strong>HTTP请求报文</strong>：在请求中，HTTP报文由<strong>方法、URI、HTTP版本、HTTP首部字段</strong>等部分构成。</p>
+<p><img src="https://photobed-1309814171.cos.ap-guangzhou.myqcloud.com/img/202207131618641.png" alt="img"></p>
+<p>下面的示例是访问<a target="_blank" rel="noopener" href="http://hackr.jp时,请求报文的首部信息./">http://hackr.jp时，请求报文的首部信息。</a></p>
+<p><img src="https://photobed-1309814171.cos.ap-guangzhou.myqcloud.com/img/202207131618575.png" alt="img"></p>
+<p><strong>HTTP响应报文</strong>：在响应中，HTTP报文由<strong>HTTP版本、状态码（数字和原因短语）、HTTP首部字段</strong>3部分构成。</p>
+<p><img src="https://photobed-1309814171.cos.ap-guangzhou.myqcloud.com/img/202207131618629.png" alt="img"></p>
+<p>以下示例是之前请求访问<a target="_blank" rel="noopener" href="http://hackr.jp/%E6%97%B6%EF%BC%8C%E8%BF%94%E5%9B%9E%E7%9A%84%E5%93%8D%E5%BA%94%E6%8A%A5%E6%96%87%E7%9A%84%E9%A6%96%E9%83%A8%E4%BF%A1%E6%81%AF%E3%80%82">http://hackr.jp/时，返回的响应报文的首部信息。</a></p>
+<p><img src="https://photobed-1309814171.cos.ap-guangzhou.myqcloud.com/img/202207131618619.png" alt="img"></p>
+<p>在报文众多的字段当中，HTTP首部字段包含的信息最为丰富。首部字段同时存在于请求和响应报文内，并涵盖HTTP报文相关的内容信息。因HTTP版本或扩展规范的变化，首部字段可支持的字段内容略有不同。本书主     要涉及HTTP&#x2F;1.1及常用的首部字段。</p>
+<h2 id="为Cookie服务的首部字段"><a href="#为Cookie服务的首部字段" class="headerlink" title="为Cookie服务的首部字段"></a>为Cookie服务的首部字段</h2><ul>
+<li>Cookie的工作机制是用户识别及状态管理。Web网站为了管理用户的状态会通过Web浏览器，把一些数据临时写入用户的计算机内。接着当用户访问该Web网站时，可通过通信方式取回之前存放的Cookie。</li>
+<li>调用Cookie时，由于可校验Cookie的有效期，以及发送方的域、路径、协议等信息，所以正规发布的Cookie内的数据不会因来自其他Web站点和攻击者的攻击而泄露。</li>
+</ul>
+<p><strong>为Cookie服务的首部字段</strong></p>
+<p><img src="https://photobed-1309814171.cos.ap-guangzhou.myqcloud.com/img/202207131623702.png" alt="img"></p>
+<p><img src="https://photobed-1309814171.cos.ap-guangzhou.myqcloud.com/img/202207131623394.png" alt="img"></p>
+<p><strong>Set-Cookie中有一个httponly属性可以防止xss攻击。</strong></p>
+<p><strong>HttpOnly属性</strong>：Cookie的HttpOnly属性是Cookie的扩展功能，它使JavaScript脚本无法获得Cookie。其主要目的为防止跨站脚本攻击（Cross-site scripting,XSS）对Cookie的信息窃取。<strong>无法在XSS中利用JavaScript劫持Cookie了</strong></p>
+<h3 id="xss攻击"><a href="#xss攻击" class="headerlink" title="xss攻击"></a>xss攻击</h3><p>关于xss攻击的介绍可以看这篇博客——<a target="_blank" rel="noopener" href="https://helloworldcoding.com/blog/article/6">https://helloworldcoding.com/blog/article/6</a></p>
+<h2 id="确保Web安全的HTTPS"><a href="#确保Web安全的HTTPS" class="headerlink" title="确保Web安全的HTTPS"></a>确保Web安全的HTTPS</h2><h2 id="HTTP的缺点"><a href="#HTTP的缺点" class="headerlink" title="HTTP的缺点"></a>HTTP的缺点</h2><p>到现在为止，我们已了解到HTTP具有相当优秀和方便的一面，然而HTTP并非只有好的一面，事物皆具两面性，它也是有不足之处的。HTTP主要有这些不足，例举如下。</p>
+<ul>
+<li><strong>通信使用明文（不加密），内容可能会被窃听</strong></li>
+<li><strong>不验证通信方的身份，因此有可能遭遇伪装</strong></li>
+<li><strong>无法证明报文的完整性，所以有可能已遭篡改</strong></li>
+</ul>
+<p>这些问题不仅在HTTP上出现，其他未加密的协议中也会存在这类问题。除此之外，HTTP本身还有很多缺点。而且，还有像某些特定的Web服务器和特定的Web浏览器在实际应用中存在的不足（也可以说成是脆弱性或安全漏洞），另外，用Java和PHP等编程语言开发的Web应用也可能存在安全漏洞。</p>
+<h3 id="1-1-通信使用明文可能会被窃听"><a href="#1-1-通信使用明文可能会被窃听" class="headerlink" title="1.1 通信使用明文可能会被窃听"></a>1.1 通信使用明文可能会被窃听</h3><p>由于HTTP本身不具备加密的功能，所以也无法做到对通信整体（使用HTTP协议通信的请求和响应的内容）进行加密。即，HTTP报文使用明文（指未经过加密的报文）方式发送。</p>
+<p><strong>TCP&#x2F;IP是可能被窃听的网络</strong></p>
+<p>如果要问为什么通信时不加密是一个缺点，这是因为，按TCP&#x2F;IP协议族的工作机制，通信内容在所有的通信线路上都有可能遭到窥视。所谓互联网，是由能连通到全世界的网络组成的。无论世界哪个角落的服务器在和客户端通信时，在此通信线路上的某些网络设备、光缆、计算机等都不可能是个人的私有物，所以不排除某个环节中会遭到恶意窥视行为。即使已经过加密处理的通信，也会被窥视到通信内容，这点和未加密的通信是相同的。只是说如果通信经过加密，就有可能让人无法破解报文信息的含义，<strong>但加密处理后的报文信息本身还是会被看到的</strong>。</p>
+<p><img src="https://photobed-1309814171.cos.ap-guangzhou.myqcloud.com/img/202207131708727.png" alt="img"></p>
+<p>窃听相同段上的通信并非难事。只需要收集在互联网上流动的数据包（帧）就行了。对于收集来的数据包的解析工作，可交给那些<a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=%E6%8A%93%E5%8C%85&spm=1001.2101.3001.7020">抓包</a>（PacketCapture）或嗅探器（Sniffer）工具。下面的图片示例就是被广泛使用的抓包工具Wireshark。它可以获取HTTP协议的请求和响应的内容，并对其进行解析。</p>
+<p>像使用GET方法发送请求、响应返回了200 OK，查看HTTP响应报文的全部内容等一系列的事情都可以做到。</p>
+<p><img src="https://photobed-1309814171.cos.ap-guangzhou.myqcloud.com/img/202207131708033.png" alt="img"></p>
+<p><strong>加密处理防止被窃听</strong></p>
+<p>在目前大家正在研究的如何防止窃听保护信息的几种对策中，最为普及的就是加密技术。加密的对象可以有这么几个。</p>
+<ul>
+<li><strong>通信的加密</strong>：一种方式就是将通信加密。HTTP协议中没有加密机制，但可以通过和SSL（Secure SocketLayer，安全套接层）或TLS（Transport LayerSecurity，安全传输层协议）的组合使用，加密HTTP的通信内容。<strong>用SSL建立安全通信线路之后，就可以在这条线路上进行HTTP通信了</strong>。&#x3D;&#x3D;<strong>与SSL组合使用的HTTP被称为HTTPS（HTTP Secure，超文本传输安全协议）或HTTP over SSL。</strong>&#x3D;&#x3D;</li>
+<li></li>
+</ul>
+<p><img src="https://photobed-1309814171.cos.ap-guangzhou.myqcloud.com/img/202207131708747.png" alt="img"></p>
+<ul>
+<li><strong>内容的加密</strong>：还有一种将参与通信的内容本身加密的方式。由于HTTP协议中没有加密机制，那么就对HTTP协议传输的内容本身加密。即把HTTP报文里所含的内容进行加密处理。在这种情况下，客户端需要对HTTP报文进行加密处理后再发送请求。诚然，为了做到有效的内容加密，前提是要求客户端和服务器同时具备加密和解密机制。主要应用在Web服务中。有一点必须引起注意，由于该方式不同于SSL或TLS将整个通信线路加密处理，所以内容仍有被篡改的风险。稍后我们会加以说明。</li>
+</ul>
+<p><img src="https://photobed-1309814171.cos.ap-guangzhou.myqcloud.com/img/202207131708663.png" alt="img"></p>
+<h3 id="1-2-不验证通信方的身份就可能遭遇伪装"><a href="#1-2-不验证通信方的身份就可能遭遇伪装" class="headerlink" title="1.2 不验证通信方的身份就可能遭遇伪装"></a>1.2 不验证通信方的身份就可能遭遇伪装</h3><p>HTTP协议中的请求和响应不会对通信方进行确认。也就是说存在“服务器是否就是发送请求中URI真正指定的主机，返回的响应是否真的返回到实际提出请求的客户端”等类似问题。</p>
+<p><strong>任何人都可发起请求</strong><br>在HTTP协议通信时，由于不存在确认通信方的处理步骤，任何人都可以发起请求。另外，服务器只要接收到请求，不管对方是谁都会返回一个响应（但也仅限于发送端的IP地址和端口号没有被Web服务器设定限制访问的前提下）。</p>
+<p><img src="https://photobed-1309814171.cos.ap-guangzhou.myqcloud.com/img/202207131708692.png" alt="img"></p>
+<p>HTTP协议的实现本身非常简单，不论是谁发送过来的请求都会返回响应，因此不确认通信方，会存在以下各种隐患。</p>
+<ul>
+<li><strong>无法确定请求发送至目标的Web服务器是否是按真实意图返回响应的那台服务器。有可能是已伪装的Web服务器</strong>。</li>
+<li><strong>无法确定响应返回到的客户端是否是按真实意图接收响应的那个客户端。有可能是已伪装的客户端</strong>。</li>
+<li><strong>无法确定正在通信的对方是否具备访问权限。因为某些Web服务器上保存着重要的信息，只想发给特定用户通信的权限。</strong></li>
+<li><strong>无法判定请求是来自何方、出自谁手。</strong></li>
+<li><strong>即使是无意义的请求也会照单全收。无法阻止海量请求下的DoS攻击（Denial ofService，拒绝服务攻击）</strong>。</li>
+</ul>
+<p><strong>查明对手的证书</strong></p>
+<p>虽然使用HTTP协议无法确定通信方，但如果使用SSL则可以。SSL不仅提供加密处理，而且还使用了一种被称为证书的手段，可用于确定方。</p>
+<p>证书由值得信任的第三方机构颁发，用以证明服务器和客户端是实际存在的。另外，伪造证书从技术角度来说是异常困难的一件事。所以只要能够确认通信方（服务器或客户端）持有的证书，即可判断通信方的真实意图。</p>
+<p>通过使用证书，以证明通信方就是意料中的服务器。这对使用者个人来讲，也减少了个人信息泄露的危险性。另外，客户端持有证书即可完成个人身份的确认，也可用于对Web网站的认证环节。</p>
+<h3 id="1-3-无法证明报文完整性，可能已遭篡改"><a href="#1-3-无法证明报文完整性，可能已遭篡改" class="headerlink" title="1.3 无法证明报文完整性，可能已遭篡改"></a>1.3 无法证明报文完整性，可能已遭篡改</h3><p>所谓完整性是指信息的准确度。若无法证明其完整性，通常也就意味着无法判断信息是否准确。</p>
+<p><strong>接收到的内容可能有误</strong><br>由于HTTP协议无法证明通信的报文完整性，因此，在请求或响应送出之后直到对方接收之前的这段时间内，即使请求或响应的内容遭到篡改，也没有办法获悉。</p>
+<p>换句话说，没有任何办法确认，发出的请求&#x2F;响应和接收到的请求&#x2F;响应是前后相同的。</p>
+<p><img src="https://photobed-1309814171.cos.ap-guangzhou.myqcloud.com/img/202207131708917.png" alt="img"></p>
+<p>比如，从某个Web网站上下载内容，是无法确定客户端下载的文件和服务器上存放的文件是否前后一致的。文件内容在传输途中可能已经被篡改为其他的内容。即使内容真的已改变，作为接收方的客户端也是觉察不到的。</p>
+<p>像这样，请求或响应在传输途中，遭攻击者拦截并篡改内容的攻击称为<strong>中间人攻击（Man-in-the-Middle attack,MITM）</strong>。</p>
+<p><img src="https://photobed-1309814171.cos.ap-guangzhou.myqcloud.com/img/202207131708301.png" alt="img"></p>
+<p><strong>如何防止篡改</strong></p>
+<p>虽然有使用HTTP协议确定报文完整性的方法，但事实上并不便捷、可靠。其中常用的是<strong>MD5和SHA-1等散列值校验</strong>的方法，以及用来确认文件的数字签名方法。</p>
+<p><img src="https://photobed-1309814171.cos.ap-guangzhou.myqcloud.com/img/202207131708360.png" alt="img"></p>
+<p>提供文件下载服务的Web网站也会提供相应的以PGP（Pretty Good Privacy，完美隐私）创建的数字签名及MD5算法生成的散列值。PGP是用来证明创建文件的数字签名，MD5是由单向函数生成的散列值。不论使用哪一种方法，都需要操纵客户端的用户本人亲自检查验证下载的文件是否就是原来服务器上的文件。浏览器无法自动帮用户检查。    </p>
+<p>可惜的是，用这些方法也依然无法百分百保证确认结果正确。<strong>因为PGP和MD5本身被改写的话，用户是没有办法意识到的。</strong></p>
+<p>为了有效防止这些弊端，有必要使用<strong>HTTPS、SSL提供认证和加密处理及摘要功能</strong>。仅靠HTTP确保完整性是非常困难的，因此通过和其他协议组合使用来实现这个目标。</p>
+<h2 id="HTTP加上加密处理和认证以及完整性保护后即是HTTPS"><a href="#HTTP加上加密处理和认证以及完整性保护后即是HTTPS" class="headerlink" title="HTTP加上加密处理和认证以及完整性保护后即是HTTPS"></a>HTTP加上加密处理和认证以及完整性保护后即是HTTPS</h2><p>如果在HTTP协议通信过程中使用未经加密的明文，比如在Web页面中输入信用卡号，如果这条通信线路遭到窃听，那么信用卡号就暴露了。另外，对于HTTP来说，服务器也好，客户端也好，都是没有办法确认通信方的。因为很有可能并不是和原本预想的通信方在实际通信。并且还需要考虑到接收到的报文在通信途中已经遭到篡改这一可能性。</p>
+<p>为了统一解决上述这些问题，需要在HTTP上再加入<strong>加密处理和认证</strong>等机制。我们把添加了加密及认证机制的HTTP称为<strong>HTTPS（HTTP Secure）</strong>。</p>
+<p><img src="https://photobed-1309814171.cos.ap-guangzhou.myqcloud.com/img/202207151532429.png" alt="img"></p>
+<p>经常会在Web的登录页面和购物结算界面等使用HTTPS通信。使用HTTPS通信时，不再用http:&#x2F;&#x2F;，而是改用https:&#x2F;&#x2F;。另外，当浏览器访问HTTPS通信有效的Web网站时，浏览器的地址栏内会出现一个带锁的标记。对HTTPS的显示方式会因浏览器的不同而有所改变。</p>
+<p><img src="https://photobed-1309814171.cos.ap-guangzhou.myqcloud.com/img/202207151532887.png" alt="img"></p>
+<h3 id="HTTPS是身披SSL外壳的HTTP"><a href="#HTTPS是身披SSL外壳的HTTP" class="headerlink" title="HTTPS是身披SSL外壳的HTTP"></a>HTTPS是身披SSL外壳的HTTP</h3><p>HTTPS并非是应用层的一种新协议。只是<strong>HTTP通信接口部分用SSL（Secure Socket Layer）和TLS（Transport Layer Security）协议代替</strong>而已。</p>
+<p>通常，HTTP直接和TCP通信。当使用SSL时，则演变成先和SSL通信，再由SSL和TCP通信了。简言之，所谓HTTPS，其实就是身披SSL协议这层外壳的HTTP。</p>
+<p><img src="https://photobed-1309814171.cos.ap-guangzhou.myqcloud.com/img/202207151532815.png" alt="img"></p>
+<p>在采用SSL后，HTTP就拥有了HTTPS的<strong>加密、证书和完整性保护</strong>这些功能。SSL是独立于HTTP的协议，所以不光是HTTP协议，其他运行在应用层的SMTP和Telnet等协议均可配合SSL协议使用。可以说SSL是当今世界上应用最为广泛的网络安全技术。</p>
+<h3 id="相互交换密钥的公开密钥加密技术"><a href="#相互交换密钥的公开密钥加密技术" class="headerlink" title="相互交换密钥的公开密钥加密技术"></a>相互交换密钥的公开密钥加密技术</h3><p>在对SSL进行讲解之前，我们先来了解一下加密方法。SSL采用一种叫做<strong>公开密钥加密</strong>（Public-keycryptography）的加密处理方式。</p>
+<p>近代的加密方法中加密算法是公开的，而密钥却是保密的。通过这种方式得以保持加密方法的安全性。加密和解密都会用到密钥。没有密钥就无法对密码解密，反过来说，任何人只要持有密钥就能解密了。如果密钥被攻击者获得，那加密也就失去了意义。</p>
+<p><strong>共享密钥加密的困境</strong></p>
+<p><strong>加密和解密同用一个密钥的方式</strong>称为共享密钥加密（Common key crypto system），也被叫做<strong>对称密钥加密</strong>。</p>
+<p><img src="https://photobed-1309814171.cos.ap-guangzhou.myqcloud.com/img/202207151532846.png" alt="img"></p>
+<p>以共享密钥方式加密时必须将密钥也发给对方。可究竟怎样才能安全地转交？在互联网上转发密钥时，如果通信被监听那么密钥就可会落入攻击者之手，同时也就失去了加密的意义。另外还得设法安全地保管接收到的密钥。</p>
+<p><img src="https://photobed-1309814171.cos.ap-guangzhou.myqcloud.com/img/202207151532885.png" alt="img"></p>
+<p><strong>使用两把密钥的公开密钥加密</strong></p>
+<p>公开密钥加密方式很好地解决了共享密钥加密的困难。公开密钥加密使用一对<strong>非对称的密钥</strong>。一把叫做<strong>私有密钥（private key）</strong>，另一把叫做<strong>公开密钥（public key）</strong>。顾名思义，<strong>私有密钥不能让其他任何人知道，而公开密钥则可以随意发布，任何人都可以获得</strong>。</p>
+<p>使用公开密钥加密方式，发送密文的一方使用对方的公开密钥进行加密处理，对方收到被加密的信息后，再使用自己的私有密钥进行解密。利用这种方式，不需要发送用来解密的私有密钥，也不必担心密钥被攻击者窃听而盗走。</p>
+<p>另外，要想根据密文和公开密钥，恢复到信息原文是异常困难的，因为解密过程就是在对离散对数进行求值，这并非轻而易举就能办到。退一步讲，如果能对一个非常大的整数做到快速地因式分解，那么密码破解还是存在希望的。但就目前的技术来看是不太现实的。</p>
+<p><strong>HTTPS采用混合加密机制</strong></p>
+<p><strong>HTTPS采用共享密钥加密和公开密钥加密两者并用的混合加密机制</strong>。若密钥能够实现安全交换，那么有可能会考虑仅使用公开密钥加密来通信。但是公开密钥加密与共享密钥加密相比，其处理速度要慢。</p>
+<p>所以应充分利用两者各自的优势，将多种方法组合起来用于通信。<strong>在交换密钥环节使用公开密钥加密方式，之后的建立通信交换报文阶段则使用共享密钥加密方式</strong>。</p>
+<p><img src="https://photobed-1309814171.cos.ap-guangzhou.myqcloud.com/img/202207151532903.png" alt="img"></p>
+<h3 id="证明公开密钥正确性的证书"><a href="#证明公开密钥正确性的证书" class="headerlink" title="证明公开密钥正确性的证书"></a>证明公开密钥正确性的证书</h3><p><strong>服务器会将由数字证书认证机构颁发的公钥证书发送给客户端，以进行公开密钥加密方式通信。公钥证书也可叫做数字证书或直接称为证书。</strong></p>
+<p>接到证书的客户端可使用数字证书认证机构的公开密钥，对那张证书上的数字签名进行验证，一旦验证通过，客户端便可明确两件事：<strong>一，认证服务器的公开密钥的是真实有效的数字证书认证机构。二，服务器的公开密钥是值得信赖的</strong>。</p>
+<p>此处认证机关的公开密钥必须安全地转交给客户端。使用通信方式时，如何安全转交是一件很困难的事，因此，多数浏览器开发商发布版本时，会事先在内部植入常用认证机关的公开密钥。</p>
+<p><img src="https://photobed-1309814171.cos.ap-guangzhou.myqcloud.com/img/202207151538707.png" alt="img"></p>
+<p><img src="https://photobed-1309814171.cos.ap-guangzhou.myqcloud.com/img/202207151538739.png" alt="img"></p>
+<p><strong>用以确认客户端的客户端证书</strong></p>
+<p>HTTPS中还可以使用客户端证书。以客户端证书进行客户端认证，证明服务器正在通信的对方始终是预料之内的客户端，其作用跟服务器证书如出一辙。</p>
+<p>但客户端证书仍存在几处问题点。其中的一个问题点是证书的获取及发布。想获取证书时，用户得自行安装客户端证书。但由于客户端证书是要付费购买的，且每张证书对应到每位用户也就意味着需支付和用户数对等的费用。另外，要让知识层次不同的用户们自行安装证书，这件事本身也充满了各种挑战。</p>
+<p>现状是，安全性极高的认证机构可颁发客户端证书但仅用于特殊用途的业务。比如那些可支撑客户端证书支出费用的业务。例如，银行的网上银行就采用了客户端证书。在登录网银时不仅要求用户确认输入ID和密码，还会要求用户的客户端证书，以确认用户是否从特定的终端访问网银。</p>
+<p>客户端证书存在的另一个问题点是，客户端证书毕竟只能用来证明客户端实际存在，而不能用来证明用户本人的真实有效性。也就是说，只要获得了安装有客户端证书的计算机的使用权限，也就意味着同时拥有了客户端证书的使用权限。</p>
+<h2 id="HTTPS通信（握手）过程"><a href="#HTTPS通信（握手）过程" class="headerlink" title="HTTPS通信（握手）过程"></a>HTTPS通信（握手）过程</h2><p><img src="https://photobed-1309814171.cos.ap-guangzhou.myqcloud.com/img/202207151547794.jpeg" alt="img"></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/u012219045/article/details/100537007?ops_request_misc=%257B%2522request%255Fid%2522%253A%2522165787100716781685341335%2522%252C%2522scm%2522%253A%252220140713.130102334..%2522%257D&amp;request_id=165787100716781685341335&amp;biz_id=0&amp;utm_medium=distribute.pc_search_result.none-task-blog-2~all~sobaiduend~default-2-100537007-null-null.142">https://blog.csdn.net/u012219045/article/details/100537007?ops_request_misc=%257B%2522request%255Fid%2522%253A%2522165787100716781685341335%2522%252C%2522scm%2522%253A%252220140713.130102334..%2522%257D&amp;request_id=165787100716781685341335&amp;biz_id=0&amp;utm_medium=distribute.pc_search_result.none-task-blog-2~all~sobaiduend~default-2-100537007-null-null.142</a></p>
+<h2 id="使用浏览器进行全双工通信的WebSocket"><a href="#使用浏览器进行全双工通信的WebSocket" class="headerlink" title="使用浏览器进行全双工通信的WebSocket"></a>使用浏览器进行全双工通信的WebSocket</h2><p>利用Ajax和Comet技术进行通信可以提升Web的浏览速度。但问题在于通信若使用HTTP协议，就无法彻底解决瓶颈问题。WebSocket网络技术正是为解决这些问题而实现的一套新协议及API。</p>
+<p>当时筹划将WebSocket作为HTML5标准的一部分，而现在它却逐渐变成了独立的协议标准。<strong>WebSocket</strong>通信协议在2011年12月11日，被RFC6455- The WebSocket Protocol定为标准。</p>
+<h3 id="WebSocket的设计与功能"><a href="#WebSocket的设计与功能" class="headerlink" title="WebSocket的设计与功能"></a>WebSocket的设计与功能</h3><p>WebSocket，即Web浏览器与Web服务器之间全双工通信标准。其中，WebSocket协议由IETF定为标准，WebSocket API由W3C定为标准。仍在开发中的WebSocket技术主要是为了解决Ajax和Comet里XMLHttpRequest附带的缺陷所引起的问题。</p>
+<h3 id="WebSocket协议"><a href="#WebSocket协议" class="headerlink" title="WebSocket协议"></a>WebSocket协议</h3><p>一旦Web服务器与客户端之间建立起WebSocket协议的通信连接，之后所有的通信都依靠这个专用协议进行。通信过程中可互相发送JSON、XML、HTML或图片等任意格式的数据。由于是建立在HTTP基础上的协议，因此连接的发起方仍是客户端，而一旦确立WebSocket通信连接，不论服务器还是客户端，任意一方都可直接向对方发送报文。下面我们列举一下WebSocket协议的主要特点。</p>
+<ul>
+<li><strong>推送功能</strong>：支持由服务器向客户端推送数据的推送功能。这样，服务器可直接发送数据，而不必等待客户端的请求。</li>
+<li><strong>减少通信量</strong>：只要建立起WebSocket连接，就希望一直保持连接状态。和HTTP相比，不但每次连接时的总开销减少，而且由于WebSocket的首部信息很小，通信量也相应减少了。</li>
+<li><strong>握手·请求</strong>：为了实现WebSocket通信，在HTTP连接建立之后，需要完成一次“握手”（Handshaking）的步骤。为了实现WebSocket通信，需要用到HTTP的Upgrade首部字段，告知服务器通信协议发生改变，以达到握手的目的。Sec-WebSocket-Key字段内记录着握手过程中必不可少的键值。Sec-WebSocket-Protocol字段内记录使用的子协议。子协议按WebSocket协议标准在连接分开使用时，定义那些连接的名称。</li>
+<li><strong>握手·响应</strong>：对于之前的请求，返回状态码101 SwitchingProtocols的响应。Sec-WebSocket-Accept的字段值是由握手请求中的Sec-WebSocket-Key的字段值生成的。成功握手确立WebSocket连接之后，通信时不再使用HTTP的数据帧，而采用WebSocket独立的数据帧。</li>
+</ul>
+<p><img src="https://photobed-1309814171.cos.ap-guangzhou.myqcloud.com/img/202207160954248.png" alt="img"></p>
+<ul>
+<li><strong>WebSocket API</strong>：JavaScript可调用“The WebSocket API”（<a target="_blank" rel="noopener" href="http://www.w3.org/TR/websockets/%EF%BC%8C%E7%94%B1W3C%E6%A0%87%E5%87%86%E5%88%B6%E5%AE%9A%EF%BC%89%E5%86%85%E6%8F%90%E4%BE%9B%E7%9A%84WebSocket%E7%A8%8B%E5%BA%8F%E6%8E%A5%E5%8F%A3%EF%BC%8C%E4%BB%A5%E5%AE%9E%E7%8E%B0WebSocket%E5%8D%8F%E8%AE%AE%E4%B8%8B%E5%85%A8%E5%8F%8C%E5%B7%A5%E9%80%9A%E4%BF%A1%E3%80%82%E4%BB%A5%E4%B8%8B%E4%B8%BA%E8%B0%83%E7%94%A8WebSocket">http://www.w3.org/TR/websockets/，由W3C标准制定）内提供的WebSocket程序接口，以实现WebSocket协议下全双工通信。以下为调用WebSocket</a> API，每50ms发送一次数据的实例。</li>
+</ul>
+<h2 id="期盼已久的HTTP-x2F-2-0"><a href="#期盼已久的HTTP-x2F-2-0" class="headerlink" title="期盼已久的HTTP&#x2F;2.0"></a>期盼已久的HTTP&#x2F;2.0</h2><p>目前主流的HTTP&#x2F;1.1标准，自1999年发布的RFC2616之后再未进行过改订。SPDY和WebSocket等技术纷纷出现，很难断言HTTP&#x2F;1.1仍是适用于当下的Web的协议。</p>
+<p>负责互联网技术标准的IETF（InternetEngineering Task Force，互联网工程任务组）创立httpbis（Hypertext Transfer ProtocolBis,<a target="_blank" rel="noopener" href="http://datatracker.ietf.org/wg/httpbis/%EF%BC%89%E5%B7%A5%E4%BD%9C%E7%BB%84%EF%BC%8C%E5%85%B6%E7%9B%AE%E6%A0%87%E6%98%AF%E6%8E%A8%E8%BF%9B%E4%B8%8B%E4%B8%80%E4%BB%A3HTTP%E2%80%94%E2%80%94HTTP/2.0%E5%9C%A82014%E5%B9%B411%E6%9C%88%E5%AE%9E%E7%8E%B0%E6%A0%87%E5%87%86%E5%8C%96%E3%80%82">http://datatracker.ietf.org/wg/httpbis/）工作组，其目标是推进下一代HTTP——HTTP/2.0在2014年11月实现标准化。</a></p>
+<p><strong>HTTP&#x2F;2.0的特点</strong></p>
+<p>HTTP&#x2F;2.0的目标是改善用户在使用Web时的速度体验。由于基本上都会先通过HTTP&#x2F;1.1与TCP连接，现在我们以下面的这些协议为基础，探讨一下它们的实现方法。<strong>SPDY、HTTP Speed+Mobility、Network-Friendly HTTP Upgrade</strong></p>
+<p>HTTP Speed+Mobility由微软公司起草，是用于改善并提高移动端通信时的通信速度和性能的标准。它建立在Google公司提出的SPDY与WebSocket的基础之上。Network-Friendly HTTP Upgrade主要是在移动端通信时改善HTTP性能的标准。</p>
+<p><strong>HTTP&#x2F;2.0的7项技术及讨论</strong></p>
+<p>HTTP&#x2F;2.0围绕着主要的7项技术进行讨论，现阶段（2012年8月13日），大都倾向于采用以下协议的技术。但是，讨论仍在持续，所以不能排除会发生重大改变的可能性。</p>
+<p><img src="https://photobed-1309814171.cos.ap-guangzhou.myqcloud.com/img/202207160954404.png" alt="img"></p>
+<h2 id="Web服务器管理文件的WebDAV"><a href="#Web服务器管理文件的WebDAV" class="headerlink" title="Web服务器管理文件的WebDAV"></a>Web服务器管理文件的WebDAV</h2><p>WebDAV（Web-based Distributed Authoringand Versioning，基于万维网的分布式创作和版本控制）是一个可对Web服务器上的内容直接进行文件复制、编辑等操作的分布式文件系统。它作为扩展HTTP&#x2F;1.1的协议定义在RFC4918。</p>
+<p>除了创建、删除文件等基本功能，它还具备文件创建者管理、文件编辑过程中禁止其他用户内容覆盖的加锁功能，以及对文件内容修改的版本控制功能。</p>
+<p><img src="https://photobed-1309814171.cos.ap-guangzhou.myqcloud.com/img/202207160954311.png" alt="img"></p>
+<p>使用HTTP&#x2F;1.1的PUT方法和DELETE方法，就可以对Web服务器上的文件进行创建和删除操作。可是出于安全性及便捷性等考虑，一般不使用。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Hustle-Lf</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://quensa.github.io/2022/12/25/%E5%9B%BE%E8%A7%A3HTTP/">https://quensa.github.io/2022/12/25/%E5%9B%BE%E8%A7%A3HTTP/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://quensa.github.io" target="_blank">Hustle's Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E5%9B%BE%E8%A7%A3HTTP/">图解HTTP</a></div><div class="post_share"><div class="social-share" data-image="https://th.wallhaven.cc/small/5g/5gwvz5.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i> 打赏</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="https://photobed-1309814171.cos.ap-guangzhou.myqcloud.com/img/202211231543598.jpg" target="_blank"><img class="post-qr-code-img" src="https://photobed-1309814171.cos.ap-guangzhou.myqcloud.com/img/202211231543598.jpg" alt="微信"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="https://photobed-1309814171.cos.ap-guangzhou.myqcloud.com/img/202211231543887.jpg" target="_blank"><img class="post-qr-code-img" src="https://photobed-1309814171.cos.ap-guangzhou.myqcloud.com/img/202211231543887.jpg" alt="支付宝"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2022/11/23/%E6%B5%85%E8%B0%88CSRF/"><img class="prev-cover" src="https://th.wallhaven.cc/small/7p/7p3we9.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">CSRF</div></div></a></div><div class="next-post pull-right"><a href="/2022/12/25/Mysql%E5%AE%9E%E6%88%9845%E8%AE%B2%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%94%E4%B8%8A/"><img class="next-cover" src="https://th.wallhaven.cc/small/jx/jx5q6w.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Mysql实战45讲笔记-上</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%9B%BE%E8%A7%A3HTTP"><span class="toc-number">1.</span> <span class="toc-text">图解HTTP</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%86%E8%A7%A3Web%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80"><span class="toc-number">1.1.</span> <span class="toc-text">了解Web网络基础</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80TCP-x2F-IP"><span class="toc-number">1.1.1.</span> <span class="toc-text">网络基础TCP&#x2F;IP</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#TCP-x2F-IP-%E9%80%9A%E4%BF%A1%E4%BC%A0%E8%BE%93%E6%B5%81"><span class="toc-number">1.1.2.</span> <span class="toc-text">TCP&#x2F;IP 通信传输流</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8E-HTTP-%E5%85%B3%E7%B3%BB%E5%AF%86%E5%88%87%E7%9A%84%E5%8D%8F%E8%AE%AE-IP%E3%80%81TCP-%E5%92%8C-DNS"><span class="toc-number">1.1.3.</span> <span class="toc-text">与 HTTP 关系密切的协议 : IP、TCP 和 DNS</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#TCP%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B"><span class="toc-number">1.1.3.1.</span> <span class="toc-text">TCP三次握手</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%B4%9F%E8%B4%A3%E5%9F%9F%E5%90%8D%E8%A7%A3%E6%9E%90%E7%9A%84-DNS-%E6%9C%8D%E5%8A%A1"><span class="toc-number">1.1.3.2.</span> <span class="toc-text">负责域名解析的 DNS 服务</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#URI-%E5%92%8C-URL"><span class="toc-number">1.1.4.</span> <span class="toc-text">URI 和 URL</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%80%E5%8D%95%E7%9A%84-HTTP-%E5%8D%8F%E8%AE%AE"><span class="toc-number">1.2.</span> <span class="toc-text">简单的 HTTP 协议</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%A4%E7%A7%8D%E6%8A%A5%E6%96%87-%E4%B8%80"><span class="toc-number">1.2.1.</span> <span class="toc-text">两种报文(一)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%91%8A%E7%9F%A5%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%84%8F%E5%9B%BE%E7%9A%84HTTP%E6%96%B9%E6%B3%95"><span class="toc-number">1.2.2.</span> <span class="toc-text">告知服务器意图的HTTP方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8C%81%E4%B9%85%E8%BF%9E%E6%8E%A5%E8%8A%82%E7%9C%81%E9%80%9A%E4%BF%A1%E9%87%8F"><span class="toc-number">1.2.3.</span> <span class="toc-text">持久连接节省通信量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AE%A1%E7%BA%BF%E5%8C%96"><span class="toc-number">1.2.4.</span> <span class="toc-text">管线化</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%94%E5%9B%9E%E7%BB%93%E6%9E%9C%E7%9A%84HTTP%E7%8A%B6%E6%80%81%E7%A0%81"><span class="toc-number">1.3.</span> <span class="toc-text">返回结果的HTTP状态码</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2XX%E6%88%90%E5%8A%9F"><span class="toc-number">1.3.1.</span> <span class="toc-text">2XX成功</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3XX%E9%87%8D%E5%AE%9A%E5%90%91"><span class="toc-number">1.3.2.</span> <span class="toc-text">3XX重定向</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4XX%E5%AE%A2%E6%88%B7%E7%AB%AF%E9%94%99%E8%AF%AF"><span class="toc-number">1.3.3.</span> <span class="toc-text">4XX客户端错误</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5XX%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%94%99%E8%AF%AF"><span class="toc-number">1.3.4.</span> <span class="toc-text">5XX服务器错误</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%A4%E7%A7%8D%E6%8A%A5%E6%96%87-%E4%BA%8C%EF%BC%89"><span class="toc-number">1.3.5.</span> <span class="toc-text">两种报文(二）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%BACookie%E6%9C%8D%E5%8A%A1%E7%9A%84%E9%A6%96%E9%83%A8%E5%AD%97%E6%AE%B5"><span class="toc-number">1.4.</span> <span class="toc-text">为Cookie服务的首部字段</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#xss%E6%94%BB%E5%87%BB"><span class="toc-number">1.4.1.</span> <span class="toc-text">xss攻击</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A1%AE%E4%BF%9DWeb%E5%AE%89%E5%85%A8%E7%9A%84HTTPS"><span class="toc-number">1.5.</span> <span class="toc-text">确保Web安全的HTTPS</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HTTP%E7%9A%84%E7%BC%BA%E7%82%B9"><span class="toc-number">1.6.</span> <span class="toc-text">HTTP的缺点</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-%E9%80%9A%E4%BF%A1%E4%BD%BF%E7%94%A8%E6%98%8E%E6%96%87%E5%8F%AF%E8%83%BD%E4%BC%9A%E8%A2%AB%E7%AA%83%E5%90%AC"><span class="toc-number">1.6.1.</span> <span class="toc-text">1.1 通信使用明文可能会被窃听</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-%E4%B8%8D%E9%AA%8C%E8%AF%81%E9%80%9A%E4%BF%A1%E6%96%B9%E7%9A%84%E8%BA%AB%E4%BB%BD%E5%B0%B1%E5%8F%AF%E8%83%BD%E9%81%AD%E9%81%87%E4%BC%AA%E8%A3%85"><span class="toc-number">1.6.2.</span> <span class="toc-text">1.2 不验证通信方的身份就可能遭遇伪装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-%E6%97%A0%E6%B3%95%E8%AF%81%E6%98%8E%E6%8A%A5%E6%96%87%E5%AE%8C%E6%95%B4%E6%80%A7%EF%BC%8C%E5%8F%AF%E8%83%BD%E5%B7%B2%E9%81%AD%E7%AF%A1%E6%94%B9"><span class="toc-number">1.6.3.</span> <span class="toc-text">1.3 无法证明报文完整性，可能已遭篡改</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HTTP%E5%8A%A0%E4%B8%8A%E5%8A%A0%E5%AF%86%E5%A4%84%E7%90%86%E5%92%8C%E8%AE%A4%E8%AF%81%E4%BB%A5%E5%8F%8A%E5%AE%8C%E6%95%B4%E6%80%A7%E4%BF%9D%E6%8A%A4%E5%90%8E%E5%8D%B3%E6%98%AFHTTPS"><span class="toc-number">1.7.</span> <span class="toc-text">HTTP加上加密处理和认证以及完整性保护后即是HTTPS</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#HTTPS%E6%98%AF%E8%BA%AB%E6%8A%ABSSL%E5%A4%96%E5%A3%B3%E7%9A%84HTTP"><span class="toc-number">1.7.1.</span> <span class="toc-text">HTTPS是身披SSL外壳的HTTP</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9B%B8%E4%BA%92%E4%BA%A4%E6%8D%A2%E5%AF%86%E9%92%A5%E7%9A%84%E5%85%AC%E5%BC%80%E5%AF%86%E9%92%A5%E5%8A%A0%E5%AF%86%E6%8A%80%E6%9C%AF"><span class="toc-number">1.7.2.</span> <span class="toc-text">相互交换密钥的公开密钥加密技术</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%81%E6%98%8E%E5%85%AC%E5%BC%80%E5%AF%86%E9%92%A5%E6%AD%A3%E7%A1%AE%E6%80%A7%E7%9A%84%E8%AF%81%E4%B9%A6"><span class="toc-number">1.7.3.</span> <span class="toc-text">证明公开密钥正确性的证书</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HTTPS%E9%80%9A%E4%BF%A1%EF%BC%88%E6%8F%A1%E6%89%8B%EF%BC%89%E8%BF%87%E7%A8%8B"><span class="toc-number">1.8.</span> <span class="toc-text">HTTPS通信（握手）过程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E6%B5%8F%E8%A7%88%E5%99%A8%E8%BF%9B%E8%A1%8C%E5%85%A8%E5%8F%8C%E5%B7%A5%E9%80%9A%E4%BF%A1%E7%9A%84WebSocket"><span class="toc-number">1.9.</span> <span class="toc-text">使用浏览器进行全双工通信的WebSocket</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#WebSocket%E7%9A%84%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%8A%9F%E8%83%BD"><span class="toc-number">1.9.1.</span> <span class="toc-text">WebSocket的设计与功能</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#WebSocket%E5%8D%8F%E8%AE%AE"><span class="toc-number">1.9.2.</span> <span class="toc-text">WebSocket协议</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%9F%E7%9B%BC%E5%B7%B2%E4%B9%85%E7%9A%84HTTP-x2F-2-0"><span class="toc-number">1.10.</span> <span class="toc-text">期盼已久的HTTP&#x2F;2.0</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Web%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%AE%A1%E7%90%86%E6%96%87%E4%BB%B6%E7%9A%84WebDAV"><span class="toc-number">1.11.</span> <span class="toc-text">Web服务器管理文件的WebDAV</span></a></li></ol></li></ol></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2022 By Hustle-Lf</div><div class="footer_custom_text"><a>勿因喜而轻诺</a><br><img src="https://haiyong.site/img/icp.png" target="_blank"><a href="https://beian.miit.gov.cn/#/Integrated/index"  style="color:blue" target="_blank">粤ICP备2022140488号-1</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">本地搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.js"></script><script src="/js/search/local-search.js"></script><script>var preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',preloader.endLoading())</script><div class="js-pjax"></div><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="99" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-nest.min.js"></script><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>let pjaxSelectors = ["title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"]):not([href="/archives/"]):not([href="/tags/"]):not([href="/categories/"]):not([href="/link/"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+
+  // removeEventListener scroll 
+  window.tocScrollFn && window.removeEventListener('scroll', window.tocScrollFn)
+  window.scrollCollect && window.removeEventListener('scroll', scrollCollect)
+
+  typeof preloader === 'object' && preloader.initLoading()
+  document.getElementById('rightside').style.cssText = "opacity: ''; transform: ''"
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof chatBtnFn === 'function' && chatBtnFn()
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+
+  typeof preloader === 'object' && preloader.endLoading()
+})
+
+document.addEventListener('pjax:error', (e) => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
