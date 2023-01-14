@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://quensa.github.io/2023/01/14/Mysql%E5%AE%9E%E6%88%9845%E8%AE%B2%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%94%E4%B8%8B/</loc>
+    <lastmod>2023-01-14</lastmod>
+  </url>
+  <url>
+    <loc>https://quensa.github.io/2022/08/13/CAP%E5%AE%9A%E7%90%86%E5%92%8CBASE%E7%90%86%E8%AE%BA/</loc>
+    <lastmod>2022-12-25</lastmod>
+  </url>
+  <url>
+    <loc>https://quensa.github.io/2022/07/11/%E6%B2%B9%E7%8C%B4%E6%8F%92%E4%BB%B6%E7%9A%84%E4%BD%BF%E7%94%A8/</loc>
+    <lastmod>2022-12-25</lastmod>
+  </url>
+  <url>
     <loc>https://quensa.github.io/2022/08/13/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/</loc>
     <lastmod>2022-12-25</lastmod>
   </url>
@@ -43,13 +55,5 @@
   <url>
     <loc>https://quensa.github.io/2022/08/13/RBAC%E6%A8%A1%E5%9E%8B/</loc>
     <lastmod>2022-08-13</lastmod>
-  </url>
-  <url>
-    <loc>https://quensa.github.io/2022/08/13/CAP%E5%AE%9A%E7%90%86%E5%92%8CBASE%E7%90%86%E8%AE%BA/</loc>
-    <lastmod>2022-08-13</lastmod>
-  </url>
-  <url>
-    <loc>https://quensa.github.io/2022/07/11/%E6%B2%B9%E7%8C%B4%E6%8F%92%E4%BB%B6%E7%9A%84%E4%BD%BF%E7%94%A8/</loc>
-    <lastmod>2022-07-11</lastmod>
   </url>
 </urlset> 
