@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://quensa.github.io/2023/04/16/Golang%20rune%E7%B1%BB%E5%9E%8B%20%E5%92%8C%20byte%E7%B1%BB%E5%9E%8B/</loc>
+    <lastmod>2023-04-16</lastmod>
+  </url>
+  <url>
     <loc>https://quensa.github.io/2023/01/14/Mysql%E5%AE%9E%E6%88%9845%E8%AE%B2%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%94%E4%B8%8B/</loc>
     <lastmod>2023-01-14</lastmod>
   </url>
